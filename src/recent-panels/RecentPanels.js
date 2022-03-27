@@ -7,7 +7,7 @@ function RecentPanels() {
 
     useEffect(() => {
         // Update the document title using the browser API
-        fetch("http://46.189.210.75:9091/note")
+        fetch(`${process.env.REACT_APP_ENDPOINT}/note`)
             .then((result) => result.json())
             .then((output) => {
                 setNotes(output);
