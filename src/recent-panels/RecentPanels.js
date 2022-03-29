@@ -11,16 +11,23 @@ function RecentPanels() {
             .then((result) => result.json())
             .then((output) => {
                 setNotes(output);
+                console.log(output);
             })
             .catch((err) => console.error(err));
     }, []);
 
     return (
         <div className="recent-files">
-            <h4 className="title">Recent Files</h4>
+            <h3 className="title">Recent Files</h3>
             <div className="panels-area">
                 {notes.map((note) => {
-                    return <Panel title={note.title} key={note.id} />;
+                    return (
+                        <Panel
+                            title={note.title}
+                            key={note.id}
+                            creator={note.createdBy}
+                        />
+                    );
                 })}
             </div>
         </div>
