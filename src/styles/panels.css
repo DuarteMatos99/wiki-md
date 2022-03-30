@@ -1,7 +1,12 @@
 .panel {
-    background-color: dimgrey;
-    width: 250px;
-    height: 100px;
+    background-color: #0000002e;
+    width: 20%;
+    height: 150px;
     border-radius: 10px;
     margin-right: 10px;
+    cursor: pointer;
+}
+
+.panel:hover {
+    background-color: #0000003b;
 }

@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Panel from "../panels/Panel";
+import Separator from "../separator/Separator"
 import "../styles/recentpanels.css";
 
 function RecentPanels() {
@@ -23,6 +24,7 @@ function RecentPanels() {
                     return <Panel title={note.title} key={note.id} />;
                 })}
             </div>
+            <br></br>
         </div>
     );
 }
