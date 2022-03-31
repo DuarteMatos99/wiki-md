@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 function Navbar() {
     return (
         <nav>
+            <Link to="/">
             <div className="logo">
                 <h4>
                     Wiki<span className="md">MD</span>
                 </h4>
             </div>
+            </Link>
             <ul className="nav-links">
                 <li>
                     <a>

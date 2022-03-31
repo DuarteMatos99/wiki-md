@@ -23,6 +23,10 @@ nav {
     font-size: 26px;
 }
 
+.logo:hover {
+    cursor: pointer;
+}
+
 .md {
     text-decoration: underline;
     text-decoration-color: #30e3ca;

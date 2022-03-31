@@ -1,5 +1,5 @@
 .profilePage{
-    margin: 5%;
+    margin: 5% 10%;
 }
 
 .image {
@@ -25,5 +25,6 @@
 
 .clearFloat {
     clear: both;
+    margin-bottom: 25px;
 }
 
