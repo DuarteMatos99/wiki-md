@@ -1,7 +1,6 @@
 import React from "react";
 import "../styles/panels.css";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
-import pic from "../avatar.png";
 
 function Panel(props) {
     return (
@@ -13,7 +12,7 @@ function Panel(props) {
             )}
 
             <div className="creator">
-                <img src={pic} className="avatar" />
+                <img src="https://i.imgur.com/bQvuv1v.jpg" className="avatar" />
                 <p>{props.creator}</p>
             </div>
 
