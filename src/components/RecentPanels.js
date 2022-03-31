@@ -1,9 +1,8 @@
 import { React, useState, useEffect } from "react";
-import Panel from "../panels/Panel";
-import "../styles/allpanels.css";
-import Button from '@mui/material/Button';
+import Panel from "./Panel";
+import "../styles/components/recentpanels.css";
 
-function AllPanels() {
+function RecentPanels() {
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
@@ -17,24 +16,23 @@ function AllPanels() {
             .catch((err) => console.error(err));
     }, []);
 
-    return(
-        <div className="all-files">
-            <h3 className="title">All Files</h3>
+    return (
+        <div className="recent-files">
+            <h3 className="title">Recent Files</h3>
             <div className="panels-area">
                 {notes.map((note) => {
                     return (
                         <Panel
+                            id={note.id}
                             title={note.title}
-                            key={note.createdBy}
+                            key={note.id}
                             creator={note.createdBy}
                         />
                     );
                 })}
             </div>
-            <Button id="seeMoreButton" variant="contained">See More</Button>
         </div>
-    )
-
+    );
 }
 
-export default AllPanels;
+export default RecentPanels;
