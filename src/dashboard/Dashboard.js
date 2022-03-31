@@ -1,10 +1,9 @@
-import Navbar from "../navbar/Navbar";
+import React from "react";
 import RecentPanels from "../recent-panels/RecentPanels";
 
 function Dashboard() {
     return (
         <div>
-            <Navbar />
             <RecentPanels />
         </div>
     );

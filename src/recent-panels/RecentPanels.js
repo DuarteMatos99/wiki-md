@@ -11,7 +11,6 @@ function RecentPanels() {
             .then((result) => result.json())
             .then((output) => {
                 setNotes(output);
-                console.log(output);
             })
             .catch((err) => console.error(err));
     }, []);

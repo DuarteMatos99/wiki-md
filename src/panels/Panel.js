@@ -4,10 +4,12 @@ import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import pic from "../avatar.png";
 
 function Panel(props) {
+    const title_limit = 22;
+
     return (
         <div className="panel">
-            {props.title.length > 22 ? (
-                <h4>{`${props.title.slice(0, 22)}...`}</h4>
+            {props.title.length > title_limit ? (
+                <h4>{`${props.title.slice(0, title_limit)}...`}</h4>
             ) : (
                 <h4>{props.title}</h4>
             )}
