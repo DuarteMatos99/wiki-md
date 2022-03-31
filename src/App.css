@@ -1,3 +1,9 @@
+/* Remove default href a css */
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 .App-logo {
     height: 40vmin;
     pointer-events: none;

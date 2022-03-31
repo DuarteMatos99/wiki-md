@@ -36,3 +36,8 @@ nav {
     display: flex;
     vertical-align: text-bottom;
 }
+
+.avatar:hover {
+    transform: scale(1.1);
+    color: #202020;
+}

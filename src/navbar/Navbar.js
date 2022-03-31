@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/navbar.css";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { Link } from "react-router-dom";
 
 function Navbar() {
     return (
@@ -18,7 +19,7 @@ function Navbar() {
                 </li>
                 <li>
                     <a>
-                        <AccountCircleRoundedIcon className="avatar" />
+                        <Link to="/profile"><AccountCircleRoundedIcon className="avatar" href="/profile"/></Link>
                     </a>
                 </li>
             </ul>

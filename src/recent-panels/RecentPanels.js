@@ -24,7 +24,7 @@ function RecentPanels() {
                     return (
                         <Panel
                             title={note.title}
-                            key={note.id}
+                            key={note.createdBy}
                             creator={note.createdBy}
                         />
                     );

@@ -1,0 +1,29 @@
+.profilePage{
+    margin: 5%;
+}
+
+.image {
+    float: left;
+    margin-right: 15px;
+}
+.nameDisplay {
+    display: table-cell;
+    padding-top: 20px;
+}
+
+.name {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.nameCheckmark {
+    display: inline-block;
+    padding-left: 2px;
+    transform: translateY(15%);
+    color: #1da1f2;
+}
+
+.clearFloat {
+    clear: both;
+}
+

@@ -1,0 +1,16 @@
+.all-files {
+    padding: 30px 10%;
+}
+
+.panels-area {
+    display: flex;
+    margin-top: 20px;
+}
+
+#seeMoreButton {
+    font-weight: bold;
+    display: block;
+    margin: 2% auto;
+    background-color: #30e3ca;
+    color: black;
+}

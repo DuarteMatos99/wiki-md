@@ -4,7 +4,7 @@ p {
 
 .panel {
     background-color: #e4f9f5;
-    width: 270px;
+    width: 20%; /* 270px before */
     height: 110px;
     border-radius: 10px;
     margin-right: 30px;

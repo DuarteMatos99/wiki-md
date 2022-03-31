@@ -2,10 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import {BrowserRouter, Routes, Route } from "react-router-dom";
+import Profile from "./profile/Profile";
+
+const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById("root")
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/profile" element={<Profile />} />
+        </Routes>
+    </BrowserRouter>,
+    rootElement
 );
