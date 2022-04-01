@@ -30,7 +30,20 @@ function CreateNotePage() {
         if(note.title === "" || note.content === "") {
             setOpen(true);
         } else {
-            navigate("/");
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: note.title,  content: note.content, createdBy: "9f2ce7fc-7608-4475-8952-590a63199fbe"})
+            };
+            fetch(`${process.env.REACT_APP_ENDPOINT}/note`, requestOptions)
+                .then(response => {
+                    if(response.status == 200) {
+                        navigate("/");
+                    }
+                    else {
+                        setOpen(true);
+                    }
+                });
         }
     }
 
