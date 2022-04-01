@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/pages/createnotepage.css";
 import Navbar from "../components/Navbar";
 import Box from "@mui/material/Box";
@@ -11,6 +12,8 @@ import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 
 function CreateNotePage() {
+
+    let navigate = useNavigate();
 
     const [open, setOpen] = React.useState(false);
     const note = {"title": "", "content": ""};
@@ -26,6 +29,8 @@ function CreateNotePage() {
     function onButtonPress(event) {
         if(note.title === "" || note.content === "") {
             setOpen(true);
+        } else {
+            navigate("/");
         }
     }
 
