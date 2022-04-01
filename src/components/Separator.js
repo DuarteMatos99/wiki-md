@@ -2,7 +2,11 @@ import React from "react";
 import "../styles/components/separator.css";
 
 function Separator() {
-    return <hr></hr>;
+    return (
+        <div className="separator">
+            <hr />
+        </div>
+    );
 }
 
 export default Separator;
