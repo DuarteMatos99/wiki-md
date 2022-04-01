@@ -1,0 +1,9 @@
+#new-dial {
+    position: fixed;
+    padding: 0 1% 1% 0;
+}
+
+#new-dial button {
+    background-color: #30e3ca;
+    color: #393e46;
+}

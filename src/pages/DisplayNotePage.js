@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from "react";
+import "../styles/pages/displaynotepage.css";
+import Navbar from "../components/Navbar";
 
 function DisplayNotePage() {
     const [note, setNotes] = useState([]);
@@ -21,11 +23,14 @@ function DisplayNotePage() {
 
     return (
         <div>
-            <h1>{note.title}</h1>
-            <p>{note.id}</p>
-            <p>{note.tagUUIDS}</p>
-            <p>{note.content}</p>
-            <p>{note.createdBy}</p>
+            <Navbar/>
+            <div class="display-note-page">
+                <h1>{note.title}</h1>
+                <p>{note.id}</p>
+                <p>{note.tagUUIDS}</p>
+                <p>{note.content}</p>
+                <p>{note.createdBy}</p>
+            </div>
         </div>
     );
 }

@@ -1,3 +1,25 @@
 .create-note-page {
     margin: 5% 10%;
 }
+
+.new-note-form {
+    position: relative;
+    padding: 50px 2% 0;
+}
+
+.note-input-wrapper {
+    margin: 5px 0;
+}
+
+#submit-note-button{
+    margin-top: 10px;
+    position: absolute;
+    right: 2%;
+    font-weight: bold;
+    background-color: #30e3ca;
+    color: black;
+}
+
+.notification {
+    padding: 0 10%;
+}
