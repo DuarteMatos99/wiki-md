@@ -23,8 +23,8 @@ function DisplayNotePage() {
 
     return (
         <div>
-            <Navbar/>
-            <div class="display-note-page">
+            <Navbar />
+            <div Name="display-note-page">
                 <h1>{note.title}</h1>
                 <p>{note.id}</p>
                 <p>{note.tagUUIDS}</p>

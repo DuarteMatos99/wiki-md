@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useContext } from "react";
 import "../styles/pages/userprofilepage.css";
 import Navbar from "../components/Navbar";
 import ListPanels from "../components/PanelsList";
@@ -8,9 +8,9 @@ function UserProfilePage() {
     return (
         <div>
             <Navbar />
-            <div class="profilePage">
+            <div className="profilePage">
                 <div>
-                    <div class="image">
+                    <div className="image">
                         <img
                             src="https://i.imgur.com/bQvuv1v.jpg"
                             alt="Failed to load"
@@ -18,19 +18,19 @@ function UserProfilePage() {
                             height="200"
                         ></img>
                     </div>
-                    <div class="nameDisplay">
+                    <div className="nameDisplay">
                         <div>
-                            <div class="name">
+                            <div className="name">
                                 <h2>Tiago Alexandre </h2>
                             </div>
-                            <div class="nameCheckmark">
+                            <div className="nameCheckmark">
                                 <CheckCircleIcon />
                             </div>
                         </div>
                         @J1mp
                     </div>
                 </div>
-                <div class="clearFloat"></div>
+                <div className="clearFloat"></div>
                 <ListPanels />
             </div>
         </div>

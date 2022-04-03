@@ -1,12 +1,14 @@
+import { React, useContext } from "react";
 import Navbar from "../components/Navbar";
 import RecentPanels from "../components/RecentPanels";
 import Separator from "../components/Separator";
 import AllPanels from "../components/AllPanels";
 import NewNoteDial from "../components/NewNoteDial";
-
+import Notification from "../components/Notification";
+import { AlertContext } from "../helper/Context";
 
 function DashboardPage() {
-
+    const { alertOpen, setAlertOpen } = useContext(AlertContext);
     return (
         <div>
             <Navbar />
@@ -14,6 +16,11 @@ function DashboardPage() {
             <Separator />
             <AllPanels />
             <NewNoteDial />
+            {alertOpen === true && (
+                <Notification
+                    info={{ message: "Note created", severityColor: "info" }}
+                />
+            )}
         </div>
     );
 }

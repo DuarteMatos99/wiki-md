@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/pages/createnotepage.css";
 import Navbar from "../components/Navbar";
@@ -6,17 +6,18 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { maxWidth } from "@mui/system";
 import { Button } from "@mui/material";
-import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
-import Collapse from '@mui/material/Collapse';
-import CloseIcon from '@mui/icons-material/Close';
+import Notification from "../components/Notification";
+import { AlertContext } from "../helper/Context";
 
 function CreateNotePage() {
-
     let navigate = useNavigate();
 
-    const [open, setOpen] = React.useState(false);
-    const note = {"title": "", "content": ""};
+    const { alertOpen, setAlertOpen } = useContext(AlertContext);
+    const [alertInfo, setAlertInfo] = React.useState({
+        message: "",
+        severityColor: "",
+    });
+    const note = { title: "", content: "" };
 
     function onTitleChange(event) {
         note.title = event.target.value;
@@ -27,57 +28,73 @@ function CreateNotePage() {
     }
 
     function onButtonPress(event) {
-        if(note.title === "" || note.content === "") {
-            setOpen(true);
+        if (note.title === "" || note.content === "") {
+            console.log(note);
+            setAlertInfo({
+                message: "Title and Content cannot be empty",
+                severityColor: "error",
+            });
+            setAlertOpen(true);
         } else {
             const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: note.title,  content: note.content, createdBy: "9f2ce7fc-7608-4475-8952-590a63199fbe"})
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: note.title,
+                    content: note.content,
+                    createdBy: "9f2ce7fc-7608-4475-8952-590a63199fbe",
+                }),
             };
-            fetch(`${process.env.REACT_APP_ENDPOINT}/note`, requestOptions)
-                .then(response => {
-                    if(response.status == 200) {
-                        navigate("/");
-                    }
-                    else {
-                        setOpen(true);
-                    }
-                });
+            fetch(
+                `${process.env.REACT_APP_ENDPOINT}/note`,
+                requestOptions
+            ).then((response) => {
+                if (response.status == 200) {
+                    setAlertOpen(true);
+                    navigate("/");
+                } else {
+                    setAlertOpen(true);
+                }
+            });
         }
     }
 
     return (
         <div>
             <Navbar />
-            <div class="create-note-page">
+            <div className="create-note-page">
                 <h1>Create Note</h1>
-                <div class="new-note-form">
-                    <div class="note-input-wrapper">
-                        <TextField id="outlined-basic" label="Title" variant="outlined" onChange={onTitleChange}/>
+                <div className="new-note-form">
+                    <div className="note-input-wrapper">
+                        <TextField
+                            id="outlined-basic"
+                            label="Title"
+                            variant="outlined"
+                            onChange={onTitleChange}
+                        />
                     </div>
                     <br />
-                    <div class="note-input-wrapper">
+                    <div className="note-input-wrapper">
                         <Box sx={{ width: maxWidth, maxWidth: "100%" }}>
-                            <TextField fullWidth label="Content" multiline rows={10} id="fullWidth" onChange={onContentChange}/>
+                            <TextField
+                                fullWidth
+                                label="Content"
+                                multiline
+                                rows={10}
+                                id="fullWidth"
+                                onChange={onContentChange}
+                            />
                         </Box>
                     </div>
-                    <Button id="submit-note-button" variant="contained" onClick={onButtonPress}>Submit</Button>
+                    <Button
+                        id="submit-note-button"
+                        variant="contained"
+                        onClick={onButtonPress}
+                    >
+                        Submit
+                    </Button>
                 </div>
-            </div>
-            <div class="notification">
-            <Box sx={{ width: '100%' }}>
-                <Collapse in={open}>
-                <Alert severity="error" action={
-                    <IconButton aria-label="close" color="inherit" size="small" onClick={() => { setOpen(false);}}>
-                        <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                    } 
-                    sx={{ mb: 2 }} >
-                    You should fill both the title and content fields.
-                </Alert>
-                </Collapse>
-            </Box>
+                {alertOpen === true && <Notification info={alertInfo} />}
             </div>
         </div>
     );

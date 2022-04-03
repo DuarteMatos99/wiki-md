@@ -23,7 +23,7 @@ function PanelsList() {
         <div>
             {notes.map((note) => {
                 return (
-                    <div class="note-card">
+                    <div className="note-card">
                         <h2>{note.title}</h2>
                         {note.createdAt}
                     </div>
