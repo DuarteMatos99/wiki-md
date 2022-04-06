@@ -17,19 +17,21 @@ function CreateNotePage() {
         message: "",
         severityColor: "",
     });
-    const note = { title: "", content: "" };
+    const [noteInfo, setNoteInfo] = React.useState({
+        title: "",
+        content: "",
+    });
 
     function onTitleChange(event) {
-        note.title = event.target.value;
+        setNoteInfo({ ...noteInfo, title: event.target.value });
     }
 
     function onContentChange(event) {
-        note.content = event.target.value;
+        setNoteInfo({ ...noteInfo, content: event.target.value });
     }
 
     function onButtonPress(event) {
-        if (note.title === "" || note.content === "") {
-            console.log(note);
+        if (noteInfo.title === "" || noteInfo.content === "") {
             setAlertInfo({
                 message: "Title and Content cannot be empty",
                 severityColor: "error",
@@ -40,8 +42,8 @@ function CreateNotePage() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    title: note.title,
-                    content: note.content,
+                    title: noteInfo.title,
+                    content: noteInfo.content,
                     createdBy: "9f2ce7fc-7608-4475-8952-590a63199fbe",
                 }),
             };
