@@ -7,6 +7,7 @@ function RecentPanels() {
 
     useEffect(() => {
         // Update the document title using the browser API
+        console.log(`${process.env.REACT_APP_ENDPOINT}/note/getLatestFive`);
         fetch(`${process.env.REACT_APP_ENDPOINT}/note/getLatestFive`)
             .then((result) => result.json())
             .then((output) => {

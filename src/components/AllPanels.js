@@ -2,41 +2,35 @@ import { React, useState, useEffect } from "react";
 import Panel from "./Panel";
 import "../styles/components/allpanels.css";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 function AllPanels() {
     const [notes, setNotes] = useState([]);
+    const [page, setCounter] = useState(0);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_ENDPOINT}/note/getLatestFive`)
+        fetch(`${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`)
             .then((result) => result.json())
             .then((output) => {
+                setCounter(page+1)
                 setNotes(output);
             })
             .catch((err) => console.error(err));
     }, []);
 
-    function handleClick(e) {
-        const data = { page: 4, itemsPerPage: 5 };
-
-        //POST request with body equal on data in JSON format
-        fetch(`${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((response) => response.json())
-            //Then with the data from the response in JSON...
-            .then((data) => {
-                console.log("Success:", data);
-            })
-            //Then with the error genereted...
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+    function getNotesByPage(e) {
+        setNotes(notes.concat(e));
+        console.log(notes);
     }
+
+    const update = () => {
+        axios.get(`${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`)
+             .then((res)=> {
+                console.log(`${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`);
+                setCounter(page+1);
+                getNotesByPage(res.data);
+             });
+    }    
 
     return (
         <div className="all-files">
@@ -56,8 +50,7 @@ function AllPanels() {
             <Button
                 id="seeMoreButton"
                 variant="contained"
-                onClick={handleClick}
-            >
+                onClick={update}>
                 See More
             </Button>
         </div>

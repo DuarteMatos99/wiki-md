@@ -6,10 +6,15 @@
     margin-left: 1.3%;
 }
 
-
 .panels-area {
-    display: flex;
+    display: table;
     margin-top: 20px;
+    width: 100%;
+}
+
+.panels-area:after {
+    content: "";
+    clear: both;
 }
 
 #seeMoreButton {
