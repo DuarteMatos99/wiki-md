@@ -4,14 +4,25 @@ import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import { Link } from "react-router-dom";
 
 function Panel(props) {
+    const tags = props.tags.split(/[,]/).filter(Boolean);
+
     return (
         <div className="panel">
             <Link to={"/note/" + props.id}>
-                {props.title.length > 22 ? (
-                    <h4>{`${props.title.slice(0, 22)}...`}</h4>
-                ) : (
-                    <h4>{props.title}</h4>
-                )}
+                <div className="title">
+                    {props.title.length > 22 ? (
+                        <h4>{`${props.title.slice(0, 22)}...`}</h4>
+                    ) : (
+                        <h4>{props.title}</h4>
+                    )}
+                </div>
+
+                <div className="tags">
+                    {tags.length > 0 &&
+                        tags.map((tag) => {
+                            return <a>{`#${tag}`}</a>;
+                        })}
+                </div>
 
                 <div className="creator">
                     <img

@@ -21,7 +21,7 @@ p {
     transform: scale(1.1);
 }
 
-.panel:hover > .arrow {
+.panel:hover .arrow {
     display: block;
 }
 
@@ -43,4 +43,9 @@ p {
     bottom: 6px;
     right: 6px;
     display: none;
+}
+
+.tags {
+    display: flex;
+    gap: 10px;
 }

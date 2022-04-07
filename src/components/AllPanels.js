@@ -9,28 +9,27 @@ function AllPanels() {
     const [page, setCounter] = useState(0);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`)
+        fetch(
+            `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`
+        )
             .then((result) => result.json())
             .then((output) => {
-                setCounter(page+1)
+                setCounter(page + 1);
                 setNotes(output);
             })
             .catch((err) => console.error(err));
     }, []);
 
-    function getNotesByPage(e) {
-        setNotes(notes.concat(e));
-        console.log(notes);
-    }
-
-    const update = () => {
-        axios.get(`${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`)
-             .then((res)=> {
-                console.log(`${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`);
-                setCounter(page+1);
-                getNotesByPage(res.data);
-             });
-    }    
+    const handleClick = () => {
+        axios
+            .get(
+                `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`
+            )
+            .then((res) => {
+                setCounter(page + 1);
+                setNotes(notes.concat(res.data));
+            });
+    };
 
     return (
         <div className="all-files">
@@ -43,6 +42,7 @@ function AllPanels() {
                             title={note.title}
                             key={note.id}
                             creator={note.createdBy}
+                            tags={note.tags}
                         />
                     );
                 })}
@@ -50,7 +50,8 @@ function AllPanels() {
             <Button
                 id="seeMoreButton"
                 variant="contained"
-                onClick={update}>
+                onClick={handleClick}
+            >
                 See More
             </Button>
         </div>
