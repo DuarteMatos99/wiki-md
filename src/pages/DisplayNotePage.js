@@ -1,9 +1,12 @@
 import { React, useState, useEffect } from "react";
 import "../styles/pages/displaynotepage.css";
 import Navbar from "../components/Navbar";
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 function DisplayNotePage() {
     const [note, setNotes] = useState([]);
+    var tags;
 
     useEffect(() => {
         // Update the document title using the browser API
@@ -20,15 +23,20 @@ function DisplayNotePage() {
     }, []);
 
     console.log(note);
+    tags = note?.tags?.split(",").filter(String);
+    console.log(tags);
 
     return (
         <div>
             <Navbar />
-            <div Name="display-note-page">
+            <div className="display-note-page">
                 <h1>{note.title}</h1>
-                <p>{note.id}</p>
-                <p>{note.tagUUIDS}</p>
-                <p>{note.content}</p>
+                
+                {tags?.map((tag) => {
+                    return <a className="display-note-tag">{tag}</a>
+                })}
+                
+                <ReactMarkdown escapeHtml={false} remarkPlugins={[remarkGfm]}>{note.content}</ReactMarkdown>
                 <p>{note.createdBy}</p>
             </div>
         </div>

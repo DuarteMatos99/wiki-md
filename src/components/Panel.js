@@ -20,8 +20,8 @@ function Panel(props) {
                 <div className="tags">
                     {tags.length > 0 &&
                         tags.map((tag) => {
-                            return <a>{`#${tag}`}</a>;
-                        })}
+                            return <a className="tag">{`#${tag}`}</a>;
+                    })}
                 </div>
 
                 <div className="creator">

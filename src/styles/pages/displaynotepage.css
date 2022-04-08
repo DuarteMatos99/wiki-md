@@ -1,3 +1,15 @@
 .display-note-page {
     margin: 5% 10%;
 }
+
+.display-note-tag {
+    background-color: #393e46;
+    color: white;
+    margin: 0 5px 0 0;
+    padding: 1px 5px;
+}
+
+.display-note-tag:hover {
+    color: white;
+}
+

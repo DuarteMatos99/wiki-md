@@ -6,7 +6,7 @@ p {
     float: left;
     background-color: #e4f9f5;
     width: 18%; /* 270px before */
-    height: 110px;
+    height: 140px;
     border-radius: 10px;
     margin: 0 1% 20px;
     padding: 18px 12px;
@@ -23,6 +23,10 @@ p {
 
 .panel:hover .arrow {
     display: block;
+}
+
+.title {
+    margin-bottom: 5px;
 }
 
 .creator {
@@ -48,4 +52,9 @@ p {
 .tags {
     display: flex;
     gap: 10px;
+}
+
+.tag {
+    background-color: #00000045;
+    padding: 0 4px;
 }

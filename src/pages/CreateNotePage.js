@@ -83,7 +83,6 @@ function CreateNotePage() {
 
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
-    const [tags, setTags] = React.useState([]);
     const loading = open && options.length === 0;
 
     React.useEffect(() => {
@@ -129,6 +128,7 @@ function CreateNotePage() {
                             onChange={onTitleChange}
                         />
                     </div>
+
                     <br />
                     
                     <Autocomplete
@@ -144,7 +144,7 @@ function CreateNotePage() {
                         loading={loading}
                         onChange={(event, value) => onAsyncChange(value)}
                         renderInput={(params) => (
-                            <TextField  {...params} label="Asynchronous" InputProps={{...params.InputProps,
+                            <TextField  {...params} label="Tags" InputProps={{...params.InputProps,
                                 endAdornment: (
                                 <React.Fragment>
                                     {loading ? <CircularProgress color="inherit" size={20} /> : null}
@@ -155,6 +155,8 @@ function CreateNotePage() {
                             />
                         )}
                     />
+                    
+                    <br />
 
                     <div className="note-input-wrapper">
                         <Box sx={{ width: maxWidth, maxWidth: "100%" }}>
