@@ -19,9 +19,11 @@ function Panel(props) {
 
                 <div className="tags">
                     {tags.length > 0 &&
-                        tags.map((tag) => {
-                            return <a className="tag">{`#${tag}`}</a>;
-                    })}
+                        tags.map((tag, tagIndex) => {
+                            if (tagIndex < 3) {
+                                return <p className="tag">{`#${tag}`}</p>;
+                            }
+                        })}
                 </div>
 
                 <div className="creator">
