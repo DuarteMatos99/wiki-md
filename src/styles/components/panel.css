@@ -50,11 +50,12 @@ p {
 }
 
 .tags {
-    display: flex;
-    gap: 10px;
+    display: inline;
 }
 
 .tag {
+    display: inline-block;
     background-color: #00000045;
     padding: 0 4px;
+    margin: 0 2px 2px 0;
 }
