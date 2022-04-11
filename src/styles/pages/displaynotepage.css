@@ -2,6 +2,13 @@
     margin: 5% 10%;
 }
 
+.display-note-page-title {
+    display: inline-block;
+    border-radius: 5px;
+    /* padding: 2px 5px; */
+    margin-bottom: 7px;
+}
+
 .display-note-tag {
     background-color: #393e46;
     color: white;
@@ -14,3 +21,11 @@
     color: white;
 }
 
+.display-note-page .separator {
+    margin: 50px 0 0 0;
+}
+
+/* markdown */
+.react-markdown {
+    margin: 4% 0;
+}

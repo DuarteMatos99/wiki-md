@@ -6,11 +6,12 @@ import AllPanels from "../components/AllPanels";
 import NewNoteDial from "../components/NewNoteDial";
 import Notification from "../components/Notification";
 import { AlertContext } from "../helper/Context";
+import "../styles/pages/dashboardpage.css"
 
 function DashboardPage() {
     const { alertOpen, setAlertOpen } = useContext(AlertContext);
     return (
-        <div>
+        <div className="dashboard-page">
             <Navbar />
             <RecentPanels />
             <Separator />

@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 import "../styles/pages/displaynotepage.css";
 import Navbar from "../components/Navbar";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import Separator from "../components/Separator";
+import MarkdownWikiMD from "../components/MarkdownWikiMD";
 
 function DisplayNotePage() {
     const [note, setNotes] = useState([]);
@@ -29,15 +29,14 @@ function DisplayNotePage() {
         <div>
             <Navbar />
             <div className="display-note-page">
-                <h1>{note.title}</h1>
-
+                <h1 className="display-note-page-title">{note.title}</h1>
+                <div>
                 {tags?.map((tag) => {
                     return <a className="display-note-tag">{tag}</a>;
                 })}
-
-                <ReactMarkdown escapeHtml={false} remarkPlugins={[remarkGfm]}>
-                    {note.content}
-                </ReactMarkdown>
+                </div> 
+                <Separator></Separator>
+                <MarkdownWikiMD>{note.content}</MarkdownWikiMD>
                 <p>{note.createdBy}</p>
             </div>
         </div>
