@@ -6,7 +6,7 @@ import AllPanels from "../components/AllPanels";
 import NewNoteDial from "../components/NewNoteDial";
 import Notification from "../components/Notification";
 import { AlertContext } from "../helper/Context";
-import "../styles/pages/dashboardpage.css"
+import "../styles/pages/dashboardpage.css";
 
 function DashboardPage() {
     const { alertOpen, setAlertOpen } = useContext(AlertContext);
@@ -19,7 +19,7 @@ function DashboardPage() {
             <NewNoteDial />
             {alertOpen === true && (
                 <Notification
-                    info={{ message: "Note created", severityColor: "info" }}
+                    info={{ message: "Note created", severityColor: "success" }}
                 />
             )}
         </div>
