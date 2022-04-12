@@ -20,10 +20,10 @@ function Navbar() {
                     </a>
                 </li>
                 <li>
-                    <Link to="/profile">
+                    <Link to="/login">
                         <AccountCircleRoundedIcon
                             className="avatar"
-                            href="/profile"
+                            href="/login"
                         />
                     </Link>
                 </li>

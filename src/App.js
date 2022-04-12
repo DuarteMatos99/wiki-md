@@ -7,6 +7,7 @@ import CreateNotePage from "./pages/CreateNotePage";
 import DisplayNotePage from "./pages/DisplayNotePage";
 import LoginPage from "./pages/LoginPage";
 import { AlertContext } from "./helper/Context";
+import CreateAccountPage from "./pages/CreateAccountPage";
 
 function App() {
     const [alertOpen, setAlertOpen] = useState(false);
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/profile" element={<UserProfilePage />} />
                     <Route path="/create-note" element={<CreateNotePage />} />
                     <Route path="/note/:id" element={<DisplayNotePage />} />
+                    <Route path="/create-account" element={<CreateAccountPage />} />
                 </Routes>
             </BrowserRouter>
         </AlertContext.Provider>

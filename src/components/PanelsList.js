@@ -7,7 +7,7 @@ function PanelsList() {
     useEffect(() => {
         // Update the document title using the browser API
         fetch(
-            `${process.env.REACT_APP_ENDPOINT}/note/getNotesCreatedBy?id=9f2ce7fc-7608-4475-8952-590a63199fbe`
+            `${process.env.REACT_APP_ENDPOINT}/note/getNotesCreatedBy?id=452afc04-d5df-4131-b744-93b13a0a772a`
         )
             .then((result) => result.json())
             .then((output) => {

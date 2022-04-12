@@ -34,8 +34,8 @@ function LoginPage() {
         <section>
             <div className="brand-area">
                 <div className="brand-title">
-                    <h2>
-                        Wiki<span className="md">MD</span>
+                    <h2 className="login-page-title" href="/profile">
+                        <a href="/">Wiki<span className="md">MD</span></a>
                     </h2>
                 </div>
             </div>
@@ -46,7 +46,7 @@ function LoginPage() {
                         sx={{ mr: 2, ml: 2 }}
                         id="username"
                         label="username"
-                        variant="standard"
+                        variant="outlined"
                         onChange={(e) => {
                             setUser(e.target.value);
                         }}
@@ -58,22 +58,21 @@ function LoginPage() {
                         id="password"
                         label="password"
                         type="password"
-                        variant="standard"
+                        variant="outlined"
                         onChange={(e) => {
                             setPwd(e.target.value);
                         }}
                         value={pwd}
                         required
                     />
-                    <Button
-                        sx={{ mr: 2, ml: 2 }}
-                        variant="outlined"
-                        type="submit"
-                    >
-                        <ArrowForwardRoundedIcon />
+                    <Button id="login-button" sx={{ mr: 2, ml: 2 }} variant="outlined" type="submit">
+                    <ArrowForwardRoundedIcon />
                     </Button>
                 </ThemeProvider>
             </form>
+            <div className="create-account-container">
+                <Button variant="text" href="/create-account">Create Account</Button>
+            </div>
         </section>
     );
 }

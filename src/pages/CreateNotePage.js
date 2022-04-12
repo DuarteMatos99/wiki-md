@@ -67,7 +67,7 @@ function CreateNotePage() {
                     title: noteInfo.title,
                     tags: noteInfo.tags,
                     content: noteInfo.content,
-                    createdBy: "9f2ce7fc-7608-4475-8952-590a63199fbe",
+                    createdBy: "452afc04-d5df-4131-b744-93b13a0a772a",
                 }),
             };
             fetch(
@@ -119,7 +119,7 @@ function CreateNotePage() {
             axios.get(`${process.env.REACT_APP_ENDPOINT}/tag`)
              .then((res)=> {
                 setOptions(res.data);
-             });
+            });
           }
         })();
     
@@ -194,6 +194,7 @@ function CreateNotePage() {
                         id="submit-note-button"
                         variant="contained"
                         onClick={onButtonPress}
+                        type="submit"
                     >
                         Submit
                     </Button>

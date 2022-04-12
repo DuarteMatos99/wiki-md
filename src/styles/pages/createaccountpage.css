@@ -1,0 +1,29 @@
+.create-account-block {
+    padding: 5% 10%;
+}
+
+.create-account-form {
+    padding: 50px 2% 0;
+}
+
+.upload-picture-button-name {
+    padding: 10px 0;
+}
+
+.upload-picture {
+    height: 200px;
+    width: 200px;
+}
+
+#create-account-submit-button {
+    background-color: #30e3ca;
+    color: black;
+    position: absolute;
+    left: 18.7%;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.create-account-textfield-wrapper {
+    margin-bottom: 8px;
+}
