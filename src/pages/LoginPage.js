@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
+import axios from "axios";
 
 const theme = createTheme({
     palette: {
@@ -24,10 +25,27 @@ function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setUser("");
-        setPwd("");
-        setSuccess(true);
-        navigate("/");
+        console.log(user, pwd);
+        try {
+            const res = await axios.post(
+                `${process.env.REACT_APP_ENDPOINT}/user/login`,
+                JSON.stringify({ usename: user, password: pwd }),
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                    withCredentials: true,
+                }
+            );
+            console.log(JSON.stringify(res?.data));
+            setUser("");
+            setPwd("");
+            setSuccess(true);
+            navigate("/");
+        } catch (err) {
+            console.log(err.response);
+        }
     };
 
     return (
@@ -35,7 +53,9 @@ function LoginPage() {
             <div className="brand-area">
                 <div className="brand-title">
                     <h2 className="login-page-title" href="/profile">
-                        <a href="/">Wiki<span className="md">MD</span></a>
+                        <a href="/">
+                            Wiki<span className="md">MD</span>
+                        </a>
                     </h2>
                 </div>
             </div>
@@ -65,13 +85,20 @@ function LoginPage() {
                         value={pwd}
                         required
                     />
-                    <Button id="login-button" sx={{ mr: 2, ml: 2 }} variant="outlined" type="submit">
-                    <ArrowForwardRoundedIcon />
+                    <Button
+                        id="login-button"
+                        sx={{ mr: 2, ml: 2 }}
+                        variant="outlined"
+                        type="submit"
+                    >
+                        <ArrowForwardRoundedIcon />
                     </Button>
                 </ThemeProvider>
             </form>
             <div className="create-account-container">
-                <Button variant="text" href="/create-account">Create Account</Button>
+                <Button variant="text" href="/create-account">
+                    Create Account
+                </Button>
             </div>
         </section>
     );
