@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
-import axios from "axios";
 
 const theme = createTheme({
     palette: {
@@ -18,35 +17,42 @@ const theme = createTheme({
 
 function LoginPage() {
     const navigate = useNavigate();
-    const { setAuth } = useContext(AuthContext);
+    const {auth, setAuth} = useContext(AuthContext);
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
     const [success, setSuccess] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(user, pwd);
+    function handleSubmit(e) {
         try {
-            const res = await axios.post(
+            e.preventDefault();
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: user,
+                    password: pwd,
+                }),
+            };
+            fetch(
                 `${process.env.REACT_APP_ENDPOINT}/user/login`,
-                JSON.stringify({ usename: user, password: pwd }),
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                    },
-                    withCredentials: true,
+                requestOptions
+            ).then((response) => {
+                setUser("");
+                setPwd("");
+                setSuccess(true);
+                if(response.status == 200) {
+                    response.json().then((output) => {
+                        setAuth(output)
+                    })
+                    navigate("/");
+                } else {
+                    console.log("Unauthorized");
                 }
-            );
-            console.log(JSON.stringify(res?.data));
-            setUser("");
-            setPwd("");
-            setSuccess(true);
-            navigate("/");
-        } catch (err) {
-            console.log(err.response);
+            });
+        } catch (error) {
+            console.log("Catch Error");
         }
-    };
+    }
 
     return (
         <section>
