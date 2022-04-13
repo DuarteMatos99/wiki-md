@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/pages/createnotepage.css";
 import Navbar from "../components/Navbar";
@@ -7,21 +7,21 @@ import TextField from "@mui/material/TextField";
 import { maxWidth } from "@mui/system";
 import { Button } from "@mui/material";
 import Notification from "../components/Notification";
-import { AlertContext } from "../helper/Context";
-import Autocomplete from '@mui/material/Autocomplete';
-import CircularProgress from '@mui/material/CircularProgress';
+import Autocomplete from "@mui/material/Autocomplete";
+import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import useAlert from "../hooks/useAlert";
 
 function sleep(delay = 0) {
     return new Promise((resolve) => {
-      setTimeout(resolve, delay);
+        setTimeout(resolve, delay);
     });
-  }
+}
 
 function CreateNotePage() {
     let navigate = useNavigate();
 
-    const { alertOpen, setAlertOpen } = useContext(AlertContext);
+    const { displayAlert, setDisplayAlert } = useAlert();
     const [alertInfo, setAlertInfo] = React.useState({
         message: "",
         severityColor: "",
@@ -40,25 +40,21 @@ function CreateNotePage() {
         setNoteInfo({ ...noteInfo, content: event.target.value });
     }
 
-    
-
     function onAsyncChange(value) {
         var tagStr = "";
-        value.map(e => {
+        value.map((e) => {
             tagStr = tagStr + e.name + ",";
-        })
+        });
         setNoteInfo({ ...noteInfo, tags: tagStr });
     }
 
-    
-
     function onButtonPress(event) {
         if (noteInfo.title === "" || noteInfo.content === "") {
-            setAlertInfo({
+            setDisplayAlert({
+                open: true,
                 message: "Title and Content cannot be empty",
                 severityColor: "error",
             });
-            setAlertOpen(true);
         } else {
             const requestOptions = {
                 method: "POST",
@@ -75,10 +71,18 @@ function CreateNotePage() {
                 requestOptions
             ).then((response) => {
                 if (response.status == 200) {
-                    setAlertOpen(true);
+                    setDisplayAlert({
+                        open: true,
+                        message: "Note created",
+                        severityColor: "success",
+                    });
                     navigate("/");
                 } else {
-                    setAlertOpen(true);
+                    setDisplayAlert({
+                        open: true,
+                        message: "Something went wrong",
+                        severityColor: "error",
+                    });
                 }
             });
         }
@@ -92,48 +96,52 @@ function CreateNotePage() {
     function onAutoCompleteChange(event) {
         let tagExists = false;
         options.map((tag) => {
-            if(String(tag.name).toLowerCase() === String(event.target).toLowerCase()) {
+            if (
+                String(tag.name).toLowerCase() ===
+                String(event.target).toLowerCase()
+            ) {
                 tagExists = true;
             }
-        })
-        if(!tagExists) {
-            if(setReplaceTag) {
+        });
+        if (!tagExists) {
+            if (setReplaceTag) {
                 setOptions(options.pop());
             }
-            setOptions(options.concat([{"name": event.target.value}]));
+            setOptions(options.concat([{ name: event.target.value }]));
             setReplaceTag(true);
         }
     }
 
     React.useEffect(() => {
         let active = true;
-    
+
         if (!loading) {
-          return undefined;
+            return undefined;
         }
-    
+
         (async () => {
-          await sleep(1e3); // For demo purposes.
-    
-          if (active) {
-            axios.get(`${process.env.REACT_APP_ENDPOINT}/tag`)
-             .then((res)=> {
-                setOptions(res.data);
-            });
-          }
+            await sleep(1e3); // For demo purposes.
+
+            if (active) {
+                axios
+                    .get(`${process.env.REACT_APP_ENDPOINT}/tag`)
+                    .then((res) => {
+                        setOptions(res.data);
+                    });
+            }
         })();
-    
+
         return () => {
-          active = false;
+            active = false;
         };
-      }, [loading]);
-    
-      React.useEffect(() => {
+    }, [loading]);
+
+    React.useEffect(() => {
         if (!open) {
-          setOptions([]);
+            setOptions([]);
         }
-      }, [open]);
-      
+    }, [open]);
+
     return (
         <div>
             <Navbar />
@@ -150,32 +158,48 @@ function CreateNotePage() {
                     </div>
 
                     <br />
-                    
+
                     <Autocomplete
                         multiple
                         id="asynchronous-demo"
                         sx={{ width: 300 }}
                         open={open}
-                        onOpen={() => {setOpen(true);}}
-                        onClose={() => {setOpen(false);}}
-                        isOptionEqualToValue={(option, value) => option.name === value.name}
+                        onOpen={() => {
+                            setOpen(true);
+                        }}
+                        onClose={() => {
+                            setOpen(false);
+                        }}
+                        isOptionEqualToValue={(option, value) =>
+                            option.name === value.name
+                        }
                         getOptionLabel={(option) => option.name}
                         options={options}
                         loading={loading}
                         onChange={(event, value) => onAsyncChange(value)}
                         renderInput={(params) => (
-                            <TextField {...params} onChange={onAutoCompleteChange} label="Tags" InputProps={{...params.InputProps,
-                                endAdornment: (
-                                <React.Fragment>
-                                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                    {params.InputProps.endAdornment}
-                                </React.Fragment>
-                                ),
-                            }}
+                            <TextField
+                                {...params}
+                                onChange={onAutoCompleteChange}
+                                label="Tags"
+                                InputProps={{
+                                    ...params.InputProps,
+                                    endAdornment: (
+                                        <React.Fragment>
+                                            {loading ? (
+                                                <CircularProgress
+                                                    color="inherit"
+                                                    size={20}
+                                                />
+                                            ) : null}
+                                            {params.InputProps.endAdornment}
+                                        </React.Fragment>
+                                    ),
+                                }}
                             />
                         )}
                     />
-                    
+
                     <br />
 
                     <div className="note-input-wrapper">
@@ -199,7 +223,7 @@ function CreateNotePage() {
                         Submit
                     </Button>
                 </div>
-                {alertOpen === true && <Notification info={alertInfo} />}
+                {displayAlert.open === true && <Notification />}
             </div>
         </div>
     );

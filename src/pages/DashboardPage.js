@@ -1,15 +1,15 @@
-import { React, useContext } from "react";
+import { React } from "react";
 import Navbar from "../components/Navbar";
 import RecentPanels from "../components/RecentPanels";
 import Separator from "../components/Separator";
 import AllPanels from "../components/AllPanels";
 import NewNoteDial from "../components/NewNoteDial";
 import Notification from "../components/Notification";
-import { AlertContext } from "../helper/Context";
+import useAlert from "../hooks/useAlert";
 import "../styles/pages/dashboardpage.css";
 
 function DashboardPage() {
-    const { alertOpen, setAlertOpen } = useContext(AlertContext);
+    const { displayAlert, setDisplayAlert } = useAlert();
     return (
         <div className="dashboard-page">
             <Navbar />
@@ -17,11 +17,7 @@ function DashboardPage() {
             <Separator />
             <AllPanels />
             <NewNoteDial />
-            {alertOpen === true && (
-                <Notification
-                    info={{ message: "Note created", severityColor: "success" }}
-                />
-            )}
+            {displayAlert.open === true && <Notification />}
         </div>
     );
 }

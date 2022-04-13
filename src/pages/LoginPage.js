@@ -1,11 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import "../styles/pages/loginpage.css";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
+import Notification from "../components/Notification";
+import useAuth from "../hooks/useAuth";
+import useAlert from "../hooks/useAlert";
 
 const theme = createTheme({
     palette: {
@@ -17,40 +19,50 @@ const theme = createTheme({
 
 function LoginPage() {
     const navigate = useNavigate();
-    const {auth, setAuth} = useContext(AuthContext);
+    const { displayAlert, setDisplayAlert } = useAlert();
+    const { auth, setAuth } = useAuth();
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
-    const [success, setSuccess] = useState(false);
 
     function handleSubmit(e) {
+        e.preventDefault();
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: user,
+                password: pwd,
+            }),
+        };
         try {
-            e.preventDefault();
-            const requestOptions = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: user,
-                    password: pwd,
-                }),
-            };
             fetch(
                 `${process.env.REACT_APP_ENDPOINT}/user/login`,
                 requestOptions
             ).then((response) => {
+                const status = response.status;
+                if (status == 200) {
+                    response.json().then((output) => {
+                        setAuth(output);
+                        setDisplayAlert({
+                            open: true,
+                            message: "Welcome!",
+                            severityColor: "success",
+                        });
+                        navigate("/");
+                    });
+                } else if (status === 401) {
+                    setDisplayAlert({
+                        open: true,
+                        message: "Username or Password is incorrect",
+                        severityColor: "error",
+                    });
+                }
+
                 setUser("");
                 setPwd("");
-                setSuccess(true);
-                if(response.status == 200) {
-                    response.json().then((output) => {
-                        setAuth(output)
-                    })
-                    navigate("/");
-                } else {
-                    console.log("Unauthorized");
-                }
             });
         } catch (error) {
-            console.log("Catch Error");
+            console.log("BERROU");
         }
     }
 
@@ -106,6 +118,7 @@ function LoginPage() {
                     Create Account
                 </Button>
             </div>
+            {displayAlert.open === true && <Notification />}
         </section>
     );
 }

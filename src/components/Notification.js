@@ -1,23 +1,23 @@
 import React, { useContext } from "react";
 import Alert from "@material-ui/lab/Alert";
 import { Snackbar } from "@mui/material";
-import { AlertContext } from "../helper/Context";
+import useAlert from "../hooks/useAlert";
 
-function Notification(props) {
-    const { alertOpen, setAlertOpen } = useContext(AlertContext);
+function Notification() {
+    const { displayAlert, setDisplayAlert } = useAlert();
 
     return (
         <div>
             <Snackbar
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                open={alertOpen}
+                open={displayAlert.open}
                 onClose={() => {
-                    setAlertOpen(false);
+                    setDisplayAlert({ ...displayAlert, open: false });
                 }}
                 autoHideDuration={3000}
             >
-                <Alert severity={props.info.severityColor}>
-                    {props.info.message}
+                <Alert severity={displayAlert.severityColor}>
+                    {displayAlert.message}
                 </Alert>
             </Snackbar>
         </div>
