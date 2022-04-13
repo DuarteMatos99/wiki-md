@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/components/markdownwikimd.css";
+import MarkdownUtils from "../utils/MarkdownUtils.js";
 
 function MarkdownWikiMD(props) {
 
@@ -42,7 +43,6 @@ function MarkdownWikiMD(props) {
             line = "";
             for(var i=0;i<lines.length;i++) {
                 if(i % 2 == 1) {
-                    console.log((i) + " " + lines[i]);
                     line += "<markdown-text class='italic'>" + lines[i] + "</markdown-text>";
                 } else {
                     line += lines[i];
@@ -71,22 +71,21 @@ function MarkdownWikiMD(props) {
         }
         // Code block logic
         if(String(line).includes("```")) {
-            let lines = String(line).split("```");
-            line = ""
-            for(var i=0; i<lines.length; i++) {
+            let codeBlock = String(line).split("```");
+            for(var i=0; i<codeBlock.length; i++) {
                 if(i % 2 == 1) {
-                    if(String(lines[i]).startsWith("json")) {
-
-                        line = ("<div class=\"markdown-code\">" + lines[i].replace("json\n", "") + "</div>").replaceAll("\n", "<br>");
+                    if(String(codeBlock[i]).startsWith("json")) {
+                        line = "<div class=\"markdown-code\">" + MarkdownUtils.loadMarkdownJsonToHtml(codeBlock[i]) + "</div>";
                     } else {
-                        line = ("<div class=\"markdown-code\">" + lines[i] + "</div>").replaceAll("\n", "<br>");
+                        line = "<div class=\"markdown-code\">" + MarkdownUtils.loadMarkdownJsonToHtml(codeBlock[i]) + "</div>";
                     }
-                    
                 }
             }
         }
         markdownDisplay += `<p>${line}</p>`;
     })
+
+    
 
     return (
         <div class="markdown-container" dangerouslySetInnerHTML={{__html: markdownDisplay}}></div>
