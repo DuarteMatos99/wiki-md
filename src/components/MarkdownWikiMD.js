@@ -11,6 +11,26 @@ function MarkdownWikiMD(props) {
     // console.log(markdown);
     markdown.map((line) => {
         // console.log(line);
+        // Blockquote syntax
+        if(String(line).startsWith(">")) {
+            let lines = line.split("\n")
+            let isLastBlockQuote = false;
+            let blockQuoteCounter = 1;
+            line = "<div class=\"markdown-blockquote\">";
+            for(var i=0;i<lines.length;i++) {
+                if(lines[i] != "") {
+                    let bruh = String(lines[i]).replaceAll(/[a-zA-z0-9*?].*/g, "").match(/[>]/g);
+                    if( bruh?.length > blockQuoteCounter) {
+                        line += "<div class=\"markdown-blockquote\">";
+                        blockQuoteCounter += 1;
+                    }
+                    line += lines[i].match(/[a-zA-z0-9*?].*/g) + "<br>";
+                    console.log(lines[i]);
+                }
+            }
+            line += "</div>".repeat(blockQuoteCounter);
+            // line += String("</div>").repeat(4);
+        }
         // Header logic
         if(String(line).includes("#")) {
             line = String(line).replace("##### ", "<h5>") + "</h1>";

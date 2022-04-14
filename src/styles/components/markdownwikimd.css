@@ -53,9 +53,17 @@
 }
 
 .markdown-json-key {
-    color: red;
+    color: #ebbc8d;
 }
 
 .markdown-json-value {
-    color: green;
+    color: #21dbca;
+}
+
+.markdown-blockquote {
+    background-color: #a4a8af54;
+    padding: 5px 10px;
+    border-left: #393e46 solid 5px;
+    border-radius: 5px;
+    margin-top: 10px;
 }

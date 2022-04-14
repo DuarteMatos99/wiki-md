@@ -39,7 +39,6 @@ class MarkdownUtils {
                     tmpLine += "<span class=\"markdown-json-value\">" + jsonSplit[x] + "</span>";
                 }
                 counter += 1;
-                
             }
         }
         console.log(tmpLine);
