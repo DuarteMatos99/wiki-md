@@ -1,0 +1,10 @@
+.avatar {
+    transform: scale(1.2);
+    display: flex;
+    vertical-align: text-bottom;
+}
+
+.avatar:hover {
+    transform: scale(1.4);
+    color: #202020;
+}

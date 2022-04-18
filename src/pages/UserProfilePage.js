@@ -1,10 +1,12 @@
 import { React, useContext } from "react";
 import "../styles/pages/userprofilepage.css";
 import Navbar from "../components/Navbar";
-import ListPanels from "../components/PanelsList";
+import PanelsList from "../components/PanelsList";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 function UserProfilePage() {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+
     return (
         <div>
             <Navbar />
@@ -27,11 +29,11 @@ function UserProfilePage() {
                                 <CheckCircleIcon />
                             </div>
                         </div>
-                        @J1mp
+                        {`@${userInfo.username}`}
                     </div>
                 </div>
                 <div className="clearFloat"></div>
-                <ListPanels />
+                <PanelsList />
             </div>
         </div>
     );

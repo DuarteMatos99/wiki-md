@@ -2,12 +2,13 @@ import { React, useState, useEffect } from "react";
 import "../styles/components/panelslist.css";
 
 function PanelsList() {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
         // Update the document title using the browser API
         fetch(
-            `${process.env.REACT_APP_ENDPOINT}/note/getNotesCreatedBy?id=452afc04-d5df-4131-b744-93b13a0a772a`
+            `${process.env.REACT_APP_ENDPOINT}/note/getNotesCreatedBy?id=${userInfo?.id}`
         )
             .then((result) => result.json())
             .then((output) => {

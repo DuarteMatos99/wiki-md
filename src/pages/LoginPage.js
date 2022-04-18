@@ -8,14 +8,9 @@ import { useNavigate } from "react-router-dom";
 import Notification from "../components/Notification";
 import useAuth from "../hooks/useAuth";
 import useAlert from "../hooks/useAlert";
+import appTheme from "../utils/Colors";
 
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#30e3ca",
-        },
-    },
-});
+const theme = appTheme();
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -78,8 +73,8 @@ function LoginPage() {
                 </div>
             </div>
 
-            <form className="fields-area" onSubmit={handleSubmit}>
-                <ThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+                <form className="fields-area" onSubmit={handleSubmit}>
                     <TextField
                         sx={{ mr: 2, ml: 2 }}
                         id="username"
@@ -111,13 +106,13 @@ function LoginPage() {
                     >
                         <ArrowForwardRoundedIcon />
                     </Button>
-                </ThemeProvider>
-            </form>
-            <div className="create-account-container">
-                <Button variant="text" href="/create-account">
-                    Create Account
-                </Button>
-            </div>
+                </form>
+                <div className="create-account-container">
+                    <Button variant="text" href="/create-account">
+                        Create Account
+                    </Button>
+                </div>
+            </ThemeProvider>
             {displayAlert.open === true && <Notification />}
         </section>
     );
