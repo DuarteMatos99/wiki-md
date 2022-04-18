@@ -42,10 +42,10 @@ function LoginPage() {
                 const status = response.status;
                 if (status == 200) {
                     response.json().then((output) => {
-                        setAuth(output);
+                        localStorage.setItem("user", JSON.stringify(output));
                         setDisplayAlert({
                             open: true,
-                            message: "Welcome!",
+                            message: `Welcome, ${output.username}!`,
                             severityColor: "success",
                         });
                         navigate("/");

@@ -21,9 +21,7 @@ function DisplayNotePage() {
             .catch((err) => console.error(err));
     }, []);
 
-    console.log(note);
     const tags = note?.tags?.split(",").filter(String);
-    console.log(tags);
 
     return (
         <div>
@@ -31,10 +29,10 @@ function DisplayNotePage() {
             <div className="display-note-page">
                 <h1 className="display-note-page-title">{note.title}</h1>
                 <div>
-                {tags?.map((tag) => {
-                    return <a className="display-note-tag">{tag}</a>;
-                })}
-                </div> 
+                    {tags?.map((tag) => {
+                        return <a className="display-note-tag">{tag}</a>;
+                    })}
+                </div>
                 <Separator></Separator>
                 <MarkdownWikiMD>{note.content}</MarkdownWikiMD>
                 <p>{note.createdBy}</p>

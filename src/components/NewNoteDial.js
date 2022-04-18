@@ -20,7 +20,6 @@ function NewNoteDial() {
             ariaLabel="SpeedDial basic example"
             sx={{ position: "absolute", bottom: 16, right: 16 }}
             icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-            href="../create-note"
         >
             {actions.map((action) => (
                 <SpeedDialAction

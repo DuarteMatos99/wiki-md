@@ -8,10 +8,12 @@ import { AlertProvider } from "./context/AlertProvider";
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-    <AuthProvider>
-        <AlertProvider>
-            <App />
-        </AlertProvider>
-    </AuthProvider>,
+    <React.StrictMode>
+        <AuthProvider>
+            <AlertProvider>
+                <App />
+            </AlertProvider>
+        </AuthProvider>
+    </React.StrictMode>,
     rootElement
 );

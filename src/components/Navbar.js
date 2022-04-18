@@ -4,6 +4,8 @@ import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { Link } from "react-router-dom";
 
 function Navbar() {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+
     return (
         <nav>
             <Link to="/">
@@ -16,14 +18,15 @@ function Navbar() {
             <ul className="nav-links">
                 <li>
                     <a>
-                        Welcome, <span className="username">Duarte</span>
+                        Welcome,{" "}
+                        <span className="username">{userInfo?.username}</span>
                     </a>
                 </li>
                 <li>
-                    <Link to="/login">
+                    <Link to="/profile">
                         <AccountCircleRoundedIcon
                             className="avatar"
-                            href="/login"
+                            href="/profile"
                         />
                     </Link>
                 </li>
