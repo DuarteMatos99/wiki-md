@@ -37,15 +37,19 @@ function UserProfilePage() {
                             <div className="name">
                                 <h2>{userProfile.name}</h2>
                             </div>
+                            {userProfile.permLevel == 1 ? (
                             <div className="nameCheckmark">
                                 <CheckCircleIcon />
-                            </div>
+                            </div>) : (
+                                <div></div>
+                            )}
+                            
                         </div>
                         {`@${userProfile.username}`}
                     </div>
                 </div>
                 <div className="clearFloat"></div>
-                <PanelsList />
+                <PanelsList profileId={window.location.pathname.split("/")[2]}/>
             </div>
         </div>
     );

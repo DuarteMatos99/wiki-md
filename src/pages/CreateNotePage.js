@@ -108,6 +108,7 @@ function CreateNotePage() {
             if (setReplaceTag) {
                 setOptions(options.pop());
             }
+            // TODO add logic to not allow spaces in tags
             setOptions(options.concat([{ name: event.target.value }]));
             setReplaceTag(true);
         }
@@ -121,8 +122,6 @@ function CreateNotePage() {
         }
 
         (async () => {
-            await sleep(1e3); // For demo purposes.
-
             if (active) {
                 axios
                     .get(`${process.env.REACT_APP_ENDPOINT}/tag`)
