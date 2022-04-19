@@ -27,10 +27,12 @@ function Panel(props) {
                 </div>
 
                 <div className="creator">
+                    <Link to={"/profile/" + props.creatorId}>
                     <img
-                        src="https://i.imgur.com/bQvuv1v.jpg"
+                        src={props.creatorImage}
                         className="avatar"
                     />
+                    </Link>
                     <p>{props.creator}</p>
                 </div>
 

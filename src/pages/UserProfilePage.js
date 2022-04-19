@@ -10,7 +10,7 @@ function UserProfilePage() {
 
     useEffect(() => {
         // Update the document title using the browser API
-        fetch(`${process.env.REACT_APP_ENDPOINT}/user/getUserById?id=${userInfo.id}`)
+        fetch(`${process.env.REACT_APP_ENDPOINT}/user/getUserById?id=${window.location.pathname.split("/")[2]}`)
             .then((result) => result.json())
             .then((output) => {
                 setUserProfile(output);

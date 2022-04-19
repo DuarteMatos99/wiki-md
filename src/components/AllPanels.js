@@ -41,7 +41,9 @@ function AllPanels() {
                             id={note.id}
                             title={note.title}
                             key={note.id}
-                            creator={note.createdBy}
+                            creatorId={note.createdBy.id}
+                            creatorImage={note.createdBy.image}
+                            creator={note.createdBy.username}
                             tags={note.tags}
                         />
                     );

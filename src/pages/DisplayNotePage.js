@@ -35,7 +35,7 @@ function DisplayNotePage() {
                 </div>
                 <Separator></Separator>
                 <MarkdownWikiMD>{note.content}</MarkdownWikiMD>
-                <p>{note.createdBy}</p>
+                <p>{note.createdBy?.username}</p>
             </div>
         </div>
     );
