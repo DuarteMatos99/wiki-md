@@ -5,6 +5,16 @@ import { Link } from "react-router-dom";
 
 function Panel(props) {
     const tags = props.tags.split(/[,]/).filter(Boolean);
+    const tags_cleaned = [];
+    tags.map((tag, tagIndex) => {
+        if (tagIndex < 3) {
+            if (tag.length > 8) {
+                tags_cleaned[tagIndex] = `${tag.slice(0, 8)}...`;
+            } else {
+                tags_cleaned[tagIndex] = tag;
+            }
+        }
+    });
 
     return (
         <div className="panel">
@@ -18,20 +28,15 @@ function Panel(props) {
                 </div>
 
                 <div className="tags">
-                    {tags.length > 0 &&
-                        tags.map((tag, tagIndex) => {
-                            if (tagIndex < 3) {
-                                return <p className="tag">{`#${tag}`}</p>;
-                            }
+                    {tags_cleaned.length > 0 &&
+                        tags_cleaned.map((tag) => {
+                            return <p className="tag">{`#${tag}`}</p>;
                         })}
                 </div>
 
                 <div className="creator">
                     <Link to={"/profile/" + props.creatorId}>
-                    <img
-                        src={props.creatorImage}
-                        className="avatar"
-                    />
+                        <img src={props.creatorImage} className="avatar" />
                     </Link>
                     <p>{props.creator}</p>
                 </div>
