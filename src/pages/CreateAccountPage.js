@@ -18,6 +18,7 @@ function CreateAccountPage() {
     const [uploadFileName, setUploadFileName] = useState(" Upload Image");
     const [imageBase64, setImage] = useState("image");
     const [createUsername, setUsername] = useState("");
+    const [createName, setName] = useState("");
     const [createPassword, setPassword] = useState("");
 
     const convertBase64 = (file) => {
@@ -55,6 +56,7 @@ function CreateAccountPage() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
+                name: createName,
                 username: createUsername,
                 password: createPassword,
                 image: imageBase64,
@@ -93,6 +95,17 @@ function CreateAccountPage() {
                             </Button>
                         </label>
                         {uploadFileName}
+                    </div>
+                    <div class="create-account-textfield-wrapper">
+                        <TextField 
+                        id="create-account-name"
+                        label="Name"
+                        variant="outlined"
+                        onChange={(event) => {
+                            console.log(event.target.value);
+                            setName(event.target.value);
+                        }}
+                        required />
                     </div>
                     <div class="create-account-textfield-wrapper">
                         <TextField 

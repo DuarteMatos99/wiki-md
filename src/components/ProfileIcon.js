@@ -5,6 +5,7 @@ import "../styles/components/profileicon.css";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 export default function ProfileIcon() {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -13,7 +14,7 @@ export default function ProfileIcon() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    
     return (
         <div>
             <AccountCircleRoundedIcon
@@ -33,7 +34,7 @@ export default function ProfileIcon() {
                 }}
             >
                 <MenuItem onClick={handleClose}>
-                    <a href="/profile">My account</a>
+                    <a href={"/profile/" + userInfo.id }>My account</a>
                 </MenuItem>
                 <MenuItem onClick={() => localStorage.removeItem("user")}>
                     <a href="/login">Logout</a>

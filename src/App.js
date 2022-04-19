@@ -14,15 +14,15 @@ function App() {
         <BrowserRouter>
             <Routes>
                 {/* public routes */}
+                <Route path="/" element={<DashboardPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
-                <Route path="/" element={<DashboardPage />} />
+                <Route path="/note/:id" element={<DisplayNotePage />} />
 
                 {/* protected routes */}
                 <Route element={<RequireAuth />}>
-                    <Route path="/profile" element={<UserProfilePage />} />
+                    <Route path="/profile/:id" element={<UserProfilePage />} />
                     <Route path="/create-note" element={<CreateNotePage />} />
-                    <Route path="/note/:id" element={<DisplayNotePage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
