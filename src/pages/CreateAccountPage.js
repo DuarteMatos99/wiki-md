@@ -68,7 +68,7 @@ function CreateAccountPage() {
             requestOptions
         ).then((response) => {
             console.log(response);
-            if (response.status == 200) {
+            if (response.status == 201) {
                 // setAlertOpen(true);
                 navigate("/login");
             } else {

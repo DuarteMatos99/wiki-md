@@ -63,7 +63,7 @@ function CreateNotePage() {
                     title: noteInfo.title,
                     tags: noteInfo.tags,
                     content: noteInfo.content,
-                    createdBy: "452afc04-d5df-4131-b744-93b13a0a772a",
+                    createdBy: userInfo.id,
                 }),
             };
             fetch(
@@ -88,6 +88,7 @@ function CreateNotePage() {
         }
     }
 
+    const userInfo = JSON.parse(localStorage.getItem("user"));
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
     const loading = open && options.length === 0;
