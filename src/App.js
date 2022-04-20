@@ -18,10 +18,10 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
                 <Route path="/note/:id" element={<DisplayNotePage />} />
-
+                <Route path="/profile/:id" element={<UserProfilePage />} />
+                
                 {/* protected routes */}
                 <Route element={<RequireAuth />}>
-                    <Route path="/profile/:id" element={<UserProfilePage />} />
                     <Route path="/create-note" element={<CreateNotePage />} />
                 </Route>
             </Routes>

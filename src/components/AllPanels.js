@@ -10,7 +10,7 @@ function AllPanels() {
 
     useEffect(() => {
         fetch(
-            `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`
+            `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=4`
         )
             .then((result) => result.json())
             .then((output) => {
@@ -23,7 +23,7 @@ function AllPanels() {
     const handleClick = () => {
         axios
             .get(
-                `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=5`
+                `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=4`
             )
             .then((res) => {
                 setCounter(page + 1);

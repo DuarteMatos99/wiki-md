@@ -11,6 +11,14 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import useAlert from "../hooks/useAlert";
+import IconButton from '@mui/material/IconButton';
+import Drawer from '@mui/material/Drawer';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import MarkdownWikiMD from "../components/MarkdownWikiMD.js"
+import CloseIcon from '@mui/icons-material/Close';
+import TagIcon from '@mui/icons-material/Tag';
+import CodeIcon from '@mui/icons-material/Code';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 function sleep(delay = 0) {
     return new Promise((resolve) => {
@@ -21,6 +29,7 @@ function sleep(delay = 0) {
 function CreateNotePage() {
     let navigate = useNavigate();
 
+    
     const { displayAlert, setDisplayAlert } = useAlert();
     const [alertInfo, setAlertInfo] = React.useState({
         message: "",
@@ -31,6 +40,15 @@ function CreateNotePage() {
         tags: "",
         content: "",
     });
+
+    const [drawerState, setDrawerState] = React.useState(false);
+    const toggleDrawer = (drawerState, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+          return;
+        }
+    
+        setDrawerState(open);
+      };
 
     function onTitleChange(event) {
         setNoteInfo({ ...noteInfo, title: event.target.value });
@@ -114,6 +132,24 @@ function CreateNotePage() {
         }
     }
 
+    function addHashtag(event) {
+        setNoteInfo({...noteInfo, content: noteInfo.content.replace(window.getSelection().toString(), ("# " + window.getSelection().toString()))});
+    }
+
+    function addCodeBlock(event) {
+        setNoteInfo({...noteInfo, content: noteInfo.content.replace(window.getSelection().toString(), ("```\n " + window.getSelection().toString() + "\n```"))});
+    }
+
+    function addBlock(event) {
+        let tmp = "";
+        window.getSelection().toString().split("\n").map(line => {
+            console.log(line);
+            tmp += "> " + line + "\n";
+        })
+        console.log(tmp);
+        setNoteInfo({...noteInfo, content: noteInfo.content.replace(window.getSelection(), tmp)});
+    }
+
     React.useEffect(() => {
         let active = true;
 
@@ -141,7 +177,7 @@ function CreateNotePage() {
             setOptions([]);
         }
     }, [open]);
-
+    
     return (
         <div>
             <Navbar />
@@ -205,6 +241,7 @@ function CreateNotePage() {
                     <div className="note-input-wrapper">
                         <Box sx={{ width: maxWidth, maxWidth: "100%" }}>
                             <TextField
+                                value={noteInfo.content}
                                 fullWidth
                                 label="Content"
                                 multiline
@@ -214,6 +251,36 @@ function CreateNotePage() {
                             />
                         </Box>
                     </div>
+                    <IconButton onClick={addHashtag} aria-label="hashtag">
+                        <TagIcon />
+                    </IconButton>
+
+                    <IconButton onClick={addCodeBlock} aria-label="hashtag">
+                        <CodeIcon />
+                    </IconButton>
+
+                    <IconButton onClick={addBlock} aria-label="hashtag">
+                        <ArrowRightIcon />
+                    </IconButton>
+
+                    <IconButton onClick={toggleDrawer(drawerState, true)} aria-label="preview">
+                        <VisibilityIcon />
+                    </IconButton>
+                    <Drawer
+                        id="create-note-drawer"
+                        anchor="a"
+                        open={drawerState}
+                        onClose={toggleDrawer(drawerState, false)}>
+                        <div class="close-create-note-drawer-wrapper">
+                            <IconButton aria-label="delete" size="small" onClick={toggleDrawer(drawerState, false)}>
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        </div>
+                        <div class="create-note-markdown-display">
+                            <MarkdownWikiMD>{noteInfo.content}</MarkdownWikiMD>
+                        </div>
+                    </Drawer>
+
                     <Button
                         id="submit-note-button"
                         variant="contained"

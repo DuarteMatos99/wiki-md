@@ -26,6 +26,11 @@ function PanelsList(props) {
                 return (
                     <div className="note-card">
                         <h2>{note.title}</h2>
+                        <div>
+                        {note.tags.split(",").slice(0,note.tags.split(",").length-1).map((tag) => {
+                            return <p className="tag">{`#${tag}`}</p>;
+                        })}
+                        </div>
                         {note.createdAt}
                     </div>
                 );

@@ -23,3 +23,17 @@
 .notification {
     padding: 0 10%;
 }
+
+.close-create-note-drawer-wrapper {
+    width: 100%;
+    text-align: right;
+    padding: 10px;
+}
+
+.create-note-markdown-display {
+    padding: 5% 10%;
+}
+
+.css-n6v7qi-MuiPaper-root-MuiDrawer-paper {
+    width: 100% !important;
+}

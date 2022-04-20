@@ -97,7 +97,7 @@ function MarkdownWikiMD(props) {
                     if(String(codeBlock[i]).startsWith("json")) {
                         line = "<div class=\"markdown-code\">" + MarkdownUtils.loadMarkdownJsonToHtml(codeBlock[i]) + "</div>";
                     } else {
-                        line = "<div class=\"markdown-code\">" + MarkdownUtils.loadMarkdownJsonToHtml(codeBlock[i]) + "</div>";
+                        line = "<div class=\"markdown-code\">" + codeBlock[i] + "</div>";
                     }
                 }
             }
