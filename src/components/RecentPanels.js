@@ -10,7 +10,6 @@ function RecentPanels() {
         fetch(`${process.env.REACT_APP_ENDPOINT}/note/getLatestFive`)
             .then((result) => result.json())
             .then((output) => {
-                console.log(output);
                 setNotes(output);
                 console.log(output);
             })
@@ -31,6 +30,7 @@ function RecentPanels() {
                             creatorImage={note.createdBy.image}
                             creator={note.createdBy.username}
                             tags={note.tags}
+                            createdAt={note.createdAt}
                         />
                     );
                 })}

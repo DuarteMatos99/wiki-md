@@ -5,16 +5,17 @@ p {
 .panel {
     float: left;
     background-color: #e4f9f5;
-    width: 18%; /* 270px before */
-    height: 140px;
+    width: 22%; /* 270px before */
     border-radius: 10px;
     margin: 0 1% 20px;
-    padding: 18px 12px;
+    padding: 20px 12px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
     background: #393e46;
     color: #fff;
     position: relative;
     cursor: pointer;
+    background-size: cover;
+    overflow: hidden;
 }
 
 .panel:hover {
@@ -25,12 +26,34 @@ p {
     display: block;
 }
 
-.title {
-    margin-bottom: 5px;
+.info-panel {
+    position: relative;
+    z-index: 1;
 }
 
-.creator {
+.background-panel {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    top: 30px;
+    left: 55%;
+    background-color: rgba(0, 0, 0, 0.15);
+    transform: rotate(40deg);
+}
+
+.title {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.bottom-area {
     padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottom-detail {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -40,13 +63,6 @@ p {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-}
-
-.arrow {
-    position: absolute;
-    bottom: 6px;
-    right: 6px;
-    display: none;
 }
 
 .tags {
