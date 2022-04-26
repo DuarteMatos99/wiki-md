@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../styles/components/panelslist.css";
 
 function PanelsList(props) {
@@ -21,9 +22,10 @@ function PanelsList(props) {
     console.log(notes);
 
     return (
-        <div>
+        <div class="note-card-list-wrapper">
             {notes.map((note) => {
                 return (
+                    <Link to={"/note/" + note.id}>
                     <div className="note-card">
                         <h2>{note.title}</h2>
                         <div>
@@ -33,6 +35,7 @@ function PanelsList(props) {
                         </div>
                         {note.createdAt}
                     </div>
+                    </Link>
                 );
             })}
         </div>

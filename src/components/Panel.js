@@ -54,7 +54,7 @@ function Panel(props) {
                         </div>
                         <div className="bottom-detail">
                             <AccessTimeIcon />
-                            <p>4 days ago</p>
+                            <p>{props.createdAt}</p>
                         </div>
                     </div>
                 </div>
