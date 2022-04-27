@@ -2,6 +2,11 @@
     margin: 5% 10%;
 }
 
+.user-card {
+    float: left;
+    width: 50%;
+}
+
 .image {
     float: left;
     margin-right: 15px;
@@ -21,6 +26,12 @@
     padding-left: 2px;
     transform: translateY(15%);
     color: #1da1f2;
+}
+
+.user-card-stat {
+    display: inline-block;
+    width: 50%;
+    padding: 25px 0 0 50px;
 }
 
 .clearFloat {
