@@ -26,8 +26,9 @@ function sleep(delay = 0) {
     });
 }
 
-function CreateNotePage() {
-    let navigate = useNavigate();
+function EditNotePage() {
+    const navigate = useNavigate();
+    const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const { displayAlert, setDisplayAlert } = useAlert();
     const [alertInfo, setAlertInfo] = React.useState({
@@ -35,12 +36,16 @@ function CreateNotePage() {
         severityColor: "",
     });
     const [noteInfo, setNoteInfo] = React.useState({
-        title: "",
-        tags: "",
         content: "",
+        tags: [],
+        title: "",
     });
-
+    const [open, setOpen] = React.useState(false);
+    const [options, setOptions] = React.useState([]);
+    const loading = open && options.length === 0;
+    const [replaceTag, setReplaceTag] = React.useState(false);
     const [drawerState, setDrawerState] = React.useState(false);
+
     const toggleDrawer = (drawerState, open) => (event) => {
         if (
             event.type === "keydown" &&
@@ -60,14 +65,6 @@ function CreateNotePage() {
         setNoteInfo({ ...noteInfo, content: event.target.value });
     }
 
-    function onAsyncChange(value) {
-        var tagStr = "";
-        value.map((e) => {
-            tagStr = tagStr + e.name + ",";
-        });
-        setNoteInfo({ ...noteInfo, tags: tagStr });
-    }
-
     function onButtonPress(event) {
         if (noteInfo.title === "" || noteInfo.content === "") {
             setDisplayAlert({
@@ -76,14 +73,19 @@ function CreateNotePage() {
                 severityColor: "error",
             });
         } else {
+            let tags_string = "";
+            for (let i = 0; i < noteInfo.tags.length; i++) {
+                tags_string += `${noteInfo.tags[i].name},`;
+            }
             const requestOptions = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     title: noteInfo.title,
-                    tags: noteInfo.tags,
+                    tags: tags_string,
                     content: noteInfo.content,
                     createdBy: userInfo.id,
+                    id: noteInfo.id,
                 }),
             };
             fetch(
@@ -107,12 +109,6 @@ function CreateNotePage() {
             });
         }
     }
-
-    const userInfo = JSON.parse(localStorage.getItem("user"));
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState([]);
-    const loading = open && options.length === 0;
-    const [replaceTag, setReplaceTag] = React.useState(false);
 
     function onAutoCompleteChange(event) {
         let tagExists = false;
@@ -171,6 +167,30 @@ function CreateNotePage() {
         });
     }
 
+    function getDefaultValueTags() {
+        return noteInfo.tags.map((index, value) => noteInfo.tags[value]);
+    }
+
+    React.useEffect(() => {
+        // Update the document title using the browser API
+        fetch(
+            `${process.env.REACT_APP_ENDPOINT}/note/getNoteById?id=${
+                window.location.pathname.split("/")[2]
+            }`
+        )
+            .then((result) => result.json())
+            .then((output) => {
+                const tags = output.tags.split(/[,]/).filter(Boolean);
+                setNoteInfo({
+                    ...output,
+                    tags: tags.map((value) => {
+                        return { name: value };
+                    }),
+                });
+            })
+            .catch((err) => console.error(err));
+    }, []);
+
     React.useEffect(() => {
         let active = true;
 
@@ -201,61 +221,68 @@ function CreateNotePage() {
 
     return (
         <div>
+            {console.log(noteInfo)}
             <Navbar />
             <div className="create-note-page">
-                <h1>Create Note</h1>
+                <h1>Edit Note</h1>
                 <div className="new-note-form">
                     <div className="note-input-wrapper">
                         <TextField
                             id="outlined-basic"
                             label="Title"
                             variant="outlined"
+                            value={noteInfo.title}
                             onChange={onTitleChange}
                         />
                     </div>
 
                     <br />
 
-                    <Autocomplete
-                        multiple
-                        id="asynchronous-demo"
-                        sx={{ width: 300 }}
-                        open={open}
-                        onOpen={() => {
-                            setOpen(true);
-                        }}
-                        onClose={() => {
-                            setOpen(false);
-                        }}
-                        isOptionEqualToValue={(option, value) =>
-                            option.name === value.name
-                        }
-                        getOptionLabel={(option) => option.name}
-                        options={options}
-                        loading={loading}
-                        onChange={(event, value) => onAsyncChange(value)}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                onChange={onAutoCompleteChange}
-                                label="Tags"
-                                InputProps={{
-                                    ...params.InputProps,
-                                    endAdornment: (
-                                        <React.Fragment>
-                                            {loading ? (
-                                                <CircularProgress
-                                                    color="inherit"
-                                                    size={20}
-                                                />
-                                            ) : null}
-                                            {params.InputProps.endAdornment}
-                                        </React.Fragment>
-                                    ),
-                                }}
-                            />
-                        )}
-                    />
+                    {noteInfo.tags.length >= 0 && (
+                        <Autocomplete
+                            multiple
+                            id="asynchronous-demo"
+                            sx={{ width: 300 }}
+                            open={open}
+                            onOpen={() => {
+                                setOpen(true);
+                            }}
+                            onClose={() => {
+                                setOpen(false);
+                            }}
+                            isOptionEqualToValue={(option, value) =>
+                                option.name === value.name
+                            }
+                            getOptionLabel={(option) => option.name}
+                            options={options}
+                            defaultValue={getDefaultValueTags()}
+                            loading={loading}
+                            onChange={(event, value) =>
+                                setNoteInfo({ ...noteInfo, tags: value })
+                            }
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    onChange={onAutoCompleteChange}
+                                    label="Tags"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                            <React.Fragment>
+                                                {loading ? (
+                                                    <CircularProgress
+                                                        color="inherit"
+                                                        size={20}
+                                                    />
+                                                ) : null}
+                                                {params.InputProps.endAdornment}
+                                            </React.Fragment>
+                                        ),
+                                    }}
+                                />
+                            )}
+                        />
+                    )}
 
                     <br />
 
@@ -325,4 +352,4 @@ function CreateNotePage() {
     );
 }
 
-export default CreateNotePage;
+export default EditNotePage;
