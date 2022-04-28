@@ -13,20 +13,32 @@ function UserProfilePage() {
         fetch(`${process.env.REACT_APP_ENDPOINT}/user/getUserById?id=${window.location.pathname.split("/")[2]}`)
             .then((result) => result.json())
             .then((output) => {
-                setUserProfile(output);
                 console.log(output);
+                setUserProfile(output);
             })
             .catch((err) => console.error(err));
     }, []);
+
+    function permissionTitle(perm) {
+        let title = ""
+        if(perm == 0) {
+            title = "User";
+        } else if(perm == 1) {
+            title = "Admin"
+        } else if(perm == 2) {
+            title = "Owner";
+        }
+        return title;
+    }
 
     return (
         <div>
             <Navbar />
             <div className="profilePage">
-                <div>
+                <div class="user-card">
                     <div className="image">
                         <img
-                            src={userProfile.image}
+                            src={userProfile.user?.image}
                             alt="Failed to load"
                             width="200"
                             height="200"
@@ -35,7 +47,7 @@ function UserProfilePage() {
                     <div className="nameDisplay">
                         <div>
                             <div className="name">
-                                <h2>{userProfile.name}</h2>
+                                <h2>{userProfile.user?.name}</h2>
                             </div>
                             {userProfile.permLevel == 1 ? (
                             <div className="nameCheckmark">
@@ -45,8 +57,13 @@ function UserProfilePage() {
                             )}
                             
                         </div>
-                        {`@${userProfile.username}`}
+                        {`@${userProfile.user?.username}`}
                     </div>
+                </div>
+                <div class="user-card-stat">
+                    <p>Member since {userProfile.created_at}</p>
+                    <p>Created {userProfile.count_cards} cards</p>
+                    <p>{permissionTitle(userProfile.user?.permLevel)}</p>
                 </div>
                 <div className="clearFloat"></div>
                 <PanelsList profileId={window.location.pathname.split("/")[2]}/>
