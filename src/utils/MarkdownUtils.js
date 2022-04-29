@@ -9,7 +9,7 @@ class MarkdownUtils {
         let tmpLine = "";
         let ident = "";
         let counter = 0;
-        for(var x=0;x<jsonSplit.length;x++) {
+        for(var x=0;x<jsonSplit?.length;x++) {
             // tmpLine += ident;
             if(jsonSplit[x] == "{") {
                 ident += "&emsp;";

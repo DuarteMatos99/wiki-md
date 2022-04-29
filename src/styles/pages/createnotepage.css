@@ -31,9 +31,28 @@
 }
 
 .create-note-markdown-display {
-    padding: 5% 10%;
+    width: 50%;
+    height: calc(100vh - 48px);
+    float: right;
+    padding: 0 2%;
+    overflow-y: auto;
+}
+
+.create-note-markdown-textfield {
+    width: 50%;
+    float: left;
+}
+
+.create-note-markdown-textfield .css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root {
+    height: calc(100vh - 48px) !important;
+}
+
+.create-note-markdown-textfield .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input {
+    height: calc(98vh - 48px) !important;
+    overflow-y: auto !important;
 }
 
 .css-n6v7qi-MuiPaper-root-MuiDrawer-paper {
     width: 100% !important;
 }
+
