@@ -72,6 +72,6 @@ p {
 .tag {
     display: inline-block;
     background-color: #00000045;
-    padding: 0 4px;
+    padding: 0 4px 2px 6px;
     margin: 0 2px 2px 0;
 }

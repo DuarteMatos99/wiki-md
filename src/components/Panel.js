@@ -19,7 +19,7 @@ function Panel(props) {
     if (tags_cleaned.length > 2) {
         tags_cleaned.push("...");
     } else if (tags_cleaned.length === 0) {
-        tags_cleaned.push("empty");
+        tags_cleaned.push("+");
     }
 
     return (

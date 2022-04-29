@@ -3,7 +3,7 @@
     padding: 0 1% 1% 0;
 }
 
-#new-dial button {
-    background-color: #30e3ca;
-    color: #393e46;
+.css-118zhtq-MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab{
+    background-color: #30e3ca !important;
+    color: #393e46 !important;
 }
