@@ -20,12 +20,6 @@ import TagIcon from "@mui/icons-material/Tag";
 import CodeIcon from "@mui/icons-material/Code";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-}
-
 function EditNotePage() {
     const navigate = useNavigate();
     const userInfo = JSON.parse(localStorage.getItem("user"));
@@ -40,11 +34,94 @@ function EditNotePage() {
         tags: [],
         title: "",
     });
+    const [showTags, setShowTags] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
     const loading = open && options.length === 0;
     const [replaceTag, setReplaceTag] = React.useState(false);
     const [drawerState, setDrawerState] = React.useState(false);
+
+    function addHashtag(event) {
+        setNoteInfo({
+            ...noteInfo,
+            content: noteInfo.content.replace(
+                window.getSelection().toString(),
+                "# " + window.getSelection().toString()
+            ),
+        });
+    }
+
+    function addCodeBlock(event) {
+        setNoteInfo({
+            ...noteInfo,
+            content: noteInfo.content.replace(
+                window.getSelection().toString(),
+                "```\n " + window.getSelection().toString() + "\n```"
+            ),
+        });
+    }
+
+    function addBlock(event) {
+        let tmp = "";
+        window
+            .getSelection()
+            .toString()
+            .split("\n")
+            .map((line) => {
+                console.log(line);
+                tmp += "> " + line + "\n";
+            });
+        setNoteInfo({
+            ...noteInfo,
+            content: noteInfo.content.replace(window.getSelection(), tmp),
+        });
+    }
+
+    const getDataNote = () => {
+        fetch(
+            `${process.env.REACT_APP_ENDPOINT}/note/getNoteById?id=${
+                window.location.pathname.split("/")[2]
+            }`
+        )
+            .then((result) => result.json())
+            .then((output) => {
+                const tags = output.tags.split(/[,]/).filter(Boolean);
+                setNoteInfo({
+                    ...output,
+                    tags: tags.map((value) => {
+                        return { name: value };
+                    }),
+                });
+                setShowTags(true);
+            })
+            .catch((err) => console.error(err));
+    };
+
+    const getTagsToOptions = () => {
+        let active = true;
+
+        if (!loading) {
+            return undefined;
+        }
+
+        (async () => {
+            if (active) {
+                axios
+                    .get(`${process.env.REACT_APP_ENDPOINT}/tag`)
+                    .then((res) => {
+                        setOptions(res.data);
+                    });
+            }
+        })();
+
+        return () => {
+            active = false;
+        };
+    };
+
+    function getDefaultValueTags() {
+        return noteInfo.tags.map((index, value) => noteInfo.tags[value]);
+    }
 
     const toggleDrawer = (drawerState, open) => (event) => {
         if (
@@ -75,7 +152,7 @@ function EditNotePage() {
         } else {
             let tags_string = "";
             for (let i = 0; i < noteInfo.tags.length; i++) {
-                tags_string += `${noteInfo.tags[i].name},`;
+                tags_string += `${noteInfo.tags[i].name.trim()},`;
             }
             const requestOptions = {
                 method: "POST",
@@ -95,7 +172,7 @@ function EditNotePage() {
                 if (response.status == 200) {
                     setDisplayAlert({
                         open: true,
-                        message: "Note created",
+                        message: "Note updated",
                         severityColor: "success",
                     });
                     navigate("/");
@@ -130,87 +207,12 @@ function EditNotePage() {
         }
     }
 
-    function addHashtag(event) {
-        setNoteInfo({
-            ...noteInfo,
-            content: noteInfo.content.replace(
-                window.getSelection().toString(),
-                "# " + window.getSelection().toString()
-            ),
-        });
-    }
-
-    function addCodeBlock(event) {
-        setNoteInfo({
-            ...noteInfo,
-            content: noteInfo.content.replace(
-                window.getSelection().toString(),
-                "```\n " + window.getSelection().toString() + "\n```"
-            ),
-        });
-    }
-
-    function addBlock(event) {
-        let tmp = "";
-        window
-            .getSelection()
-            .toString()
-            .split("\n")
-            .map((line) => {
-                console.log(line);
-                tmp += "> " + line + "\n";
-            });
-        console.log(tmp);
-        setNoteInfo({
-            ...noteInfo,
-            content: noteInfo.content.replace(window.getSelection(), tmp),
-        });
-    }
-
-    function getDefaultValueTags() {
-        return noteInfo.tags.map((index, value) => noteInfo.tags[value]);
-    }
-
     React.useEffect(() => {
-        // Update the document title using the browser API
-        fetch(
-            `${process.env.REACT_APP_ENDPOINT}/note/getNoteById?id=${
-                window.location.pathname.split("/")[2]
-            }`
-        )
-            .then((result) => result.json())
-            .then((output) => {
-                const tags = output.tags.split(/[,]/).filter(Boolean);
-                setNoteInfo({
-                    ...output,
-                    tags: tags.map((value) => {
-                        return { name: value };
-                    }),
-                });
-            })
-            .catch((err) => console.error(err));
+        getDataNote();
     }, []);
 
     React.useEffect(() => {
-        let active = true;
-
-        if (!loading) {
-            return undefined;
-        }
-
-        (async () => {
-            if (active) {
-                axios
-                    .get(`${process.env.REACT_APP_ENDPOINT}/tag`)
-                    .then((res) => {
-                        setOptions(res.data);
-                    });
-            }
-        })();
-
-        return () => {
-            active = false;
-        };
+        getTagsToOptions();
     }, [loading]);
 
     React.useEffect(() => {
@@ -238,7 +240,7 @@ function EditNotePage() {
 
                     <br />
 
-                    {noteInfo.tags.length >= 0 && (
+                    {showTags && (
                         <Autocomplete
                             multiple
                             id="asynchronous-demo"
