@@ -1,46 +1,102 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/pages/createnotepage.css";
-import Navbar from "../components/Navbar";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { maxWidth } from "@mui/system";
 import { Button } from "@mui/material";
-import Notification from "../components/Notification";
+import axios from "axios";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
-import axios from "axios";
-import useAlert from "../hooks/useAlert";
-import IconButton from "@mui/material/IconButton";
-import Drawer from "@mui/material/Drawer";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import MarkdownWikiMD from "../components/MarkdownWikiMD.js";
 import CloseIcon from "@mui/icons-material/Close";
 import TagIcon from "@mui/icons-material/Tag";
 import CodeIcon from "@mui/icons-material/Code";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import IconButton from "@mui/material/IconButton";
+import Drawer from "@mui/material/Drawer";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-}
+import "../styles/pages/createnotepage.css";
+import Navbar from "../components/Navbar";
+import Notification from "../components/Notification";
+import useAlert from "../hooks/useAlert";
+import MarkdownWikiMD from "../components/MarkdownWikiMD.js";
 
-function CreateNotePage() {
+const CreateNotePage = () => {
     let navigate = useNavigate();
+    const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const { displayAlert, setDisplayAlert } = useAlert();
-    const [alertInfo, setAlertInfo] = React.useState({
-        message: "",
-        severityColor: "",
-    });
     const [noteInfo, setNoteInfo] = React.useState({
         title: "",
         tags: "",
         content: "",
     });
-
+    const [open, setOpen] = React.useState(false);
+    const [options, setOptions] = React.useState([]);
+    const [replaceTag, setReplaceTag] = React.useState(false);
     const [drawerState, setDrawerState] = React.useState(false);
+
+    const loading = open && options.length === 0;
+
+    function addCodeBlock(event) {
+        setNoteInfo({
+            ...noteInfo,
+            content: noteInfo.content.replace(
+                window.getSelection().toString(),
+                "```\n " + window.getSelection().toString() + "\n```"
+            ),
+        });
+    }
+
+    function addBlock(event) {
+        let tmp = "";
+        window
+            .getSelection()
+            .toString()
+            .split("\n")
+            .map((line) => {
+                console.log(line);
+                tmp += "> " + line + "\n";
+            });
+        console.log(tmp);
+        setNoteInfo({
+            ...noteInfo,
+            content: noteInfo.content.replace(window.getSelection(), tmp),
+        });
+    }
+
+    function addHashtag(event) {
+        setNoteInfo({
+            ...noteInfo,
+            content: noteInfo.content.replace(
+                window.getSelection().toString(),
+                "# " + window.getSelection().toString()
+            ),
+        });
+    }
+
+    const getTagsToOptions = () => {
+        let active = true;
+
+        if (!loading) {
+            return undefined;
+        }
+
+        (async () => {
+            if (active) {
+                axios
+                    .get(`${process.env.REACT_APP_ENDPOINT}/tag`)
+                    .then((res) => {
+                        setOptions(res.data);
+                    });
+            }
+        })();
+
+        return () => {
+            active = false;
+        };
+    };
+
     const toggleDrawer = (drawerState, open) => (event) => {
         if (
             event.type === "keydown" &&
@@ -108,12 +164,6 @@ function CreateNotePage() {
         }
     }
 
-    const userInfo = JSON.parse(localStorage.getItem("user"));
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState([]);
-    const loading = open && options.length === 0;
-    const [replaceTag, setReplaceTag] = React.useState(false);
-
     function onAutoCompleteChange(event) {
         let tagExists = false;
         options.map((tag) => {
@@ -134,63 +184,8 @@ function CreateNotePage() {
         }
     }
 
-    function addHashtag(event) {
-        setNoteInfo({
-            ...noteInfo,
-            content: noteInfo.content.replace(
-                window.getSelection().toString(),
-                "# " + window.getSelection().toString()
-            ),
-        });
-    }
-
-    function addCodeBlock(event) {
-        setNoteInfo({
-            ...noteInfo,
-            content: noteInfo.content.replace(
-                window.getSelection().toString(),
-                "```\n " + window.getSelection().toString() + "\n```"
-            ),
-        });
-    }
-
-    function addBlock(event) {
-        let tmp = "";
-        window
-            .getSelection()
-            .toString()
-            .split("\n")
-            .map((line) => {
-                console.log(line);
-                tmp += "> " + line + "\n";
-            });
-        console.log(tmp);
-        setNoteInfo({
-            ...noteInfo,
-            content: noteInfo.content.replace(window.getSelection(), tmp),
-        });
-    }
-
     React.useEffect(() => {
-        let active = true;
-
-        if (!loading) {
-            return undefined;
-        }
-
-        (async () => {
-            if (active) {
-                axios
-                    .get(`${process.env.REACT_APP_ENDPOINT}/tag`)
-                    .then((res) => {
-                        setOptions(res.data);
-                    });
-            }
-        })();
-
-        return () => {
-            active = false;
-        };
+        getTagsToOptions();
     }, [loading]);
 
     React.useEffect(() => {
@@ -323,6 +318,6 @@ function CreateNotePage() {
             </div>
         </div>
     );
-}
+};
 
 export default CreateNotePage;

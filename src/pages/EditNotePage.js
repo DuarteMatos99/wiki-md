@@ -1,45 +1,45 @@
 import React from "react";
+import axios from "axios";
+import { maxWidth } from "@mui/system";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import "../styles/pages/createnotepage.css";
 import Navbar from "../components/Navbar";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { maxWidth } from "@mui/system";
-import { Button } from "@mui/material";
-import Notification from "../components/Notification";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
-import axios from "axios";
-import useAlert from "../hooks/useAlert";
 import IconButton from "@mui/material/IconButton";
 import Drawer from "@mui/material/Drawer";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import MarkdownWikiMD from "../components/MarkdownWikiMD.js";
 import CloseIcon from "@mui/icons-material/Close";
 import TagIcon from "@mui/icons-material/Tag";
 import CodeIcon from "@mui/icons-material/Code";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
+import "../styles/pages/createnotepage.css";
+import Notification from "../components/Notification";
+import useAlert from "../hooks/useAlert";
+import MarkdownWikiMD from "../components/MarkdownWikiMD.js";
+import useLoader from "../hooks/useLoader";
+import RequireLoader from "../components/RequireLoader";
+
 function EditNotePage() {
     const navigate = useNavigate();
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
+    const { setDisplayLoader } = useLoader();
     const { displayAlert, setDisplayAlert } = useAlert();
-    const [alertInfo, setAlertInfo] = React.useState({
-        message: "",
-        severityColor: "",
-    });
+
     const [noteInfo, setNoteInfo] = React.useState({
         content: "",
         tags: [],
         title: "",
     });
-    const [showTags, setShowTags] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
-    const loading = open && options.length === 0;
     const [replaceTag, setReplaceTag] = React.useState(false);
     const [drawerState, setDrawerState] = React.useState(false);
+    const loading = open && options.length === 0;
 
     function addHashtag(event) {
         setNoteInfo({
@@ -78,6 +78,8 @@ function EditNotePage() {
     }
 
     const getDataNote = () => {
+        setDisplayLoader(true);
+
         fetch(
             `${process.env.REACT_APP_ENDPOINT}/note/getNoteById?id=${
                 window.location.pathname.split("/")[2]
@@ -92,7 +94,7 @@ function EditNotePage() {
                         return { name: value };
                     }),
                 });
-                setShowTags(true);
+                setDisplayLoader(false);
             })
             .catch((err) => console.error(err));
     };
@@ -198,7 +200,7 @@ function EditNotePage() {
             }
         });
         if (!tagExists) {
-            if (setReplaceTag) {
+            if (replaceTag) {
                 setOptions(options.pop());
             }
             // TODO add logic to not allow spaces in tags
@@ -223,7 +225,6 @@ function EditNotePage() {
 
     return (
         <div>
-            {console.log(noteInfo)}
             <Navbar />
             <div className="create-note-page">
                 <h1>Edit Note</h1>
@@ -240,7 +241,7 @@ function EditNotePage() {
 
                     <br />
 
-                    {showTags && (
+                    <RequireLoader>
                         <Autocomplete
                             multiple
                             id="asynchronous-demo"
@@ -284,7 +285,7 @@ function EditNotePage() {
                                 />
                             )}
                         />
-                    )}
+                    </RequireLoader>
 
                     <br />
 
