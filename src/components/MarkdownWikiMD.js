@@ -139,16 +139,34 @@ function MarkdownWikiMD(props) {
         // Unordered List Logic
         if(String(line).includes("- ")) {
             let rows = String(line).split("\n");
-            line = "<ul>";
+            line = "<ul class=\"markdown-unordered-list\">";
             for(var i=0; i<rows.length; i++) {
                 if(rows[i].startsWith("- ")) {
                     line += "<li>" + rows[i].replace("-", "") + "</li>";
                 } else {
-                    line += "</ul>" + rows[i] + "<ul>";
+                    line += "</ul>" + rows[i] + "<ul class=\"markdown-unordered-list\">";
                 }
-                
             }
             line += "</ul>"
+        }
+
+        if(String(line).includes("1. ")) {
+            let rows = String(line).split("\n");
+            let counter = 1;
+            line = "";
+            for(var i=0; i<rows.length; i++) {
+                if(rows[i].startsWith(counter.toString() + ". ")) {
+                    if(counter == 1) {
+                        line += "<ol class=\"markdown-ordered-list\">";
+                    }
+                    line += "<li>" + rows[i].replace(counter.toString() + ". ", "") + "</li>";
+                } else {
+                    line += "</ol>" + rows[i];
+                    counter = 0;
+                }
+                counter++;
+            }
+            line += "</ol>"
         }
 
         markdownDisplay += `<p class="markdown-paragraph">${line}</p>`;

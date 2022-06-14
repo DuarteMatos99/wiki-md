@@ -71,3 +71,11 @@
 .markdown-container .markdown-paragraph {
     margin-top: 15px;
 }
+
+.markdown-unordered-list {
+    padding-left: 20px;
+}
+
+.markdown-ordered-list {
+    padding-left: 30px;
+}
