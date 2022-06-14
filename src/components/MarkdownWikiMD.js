@@ -1,12 +1,45 @@
 import React from "react";
+import {useEffect} from 'react';
 import "../styles/components/markdownwikimd.css";
 import MarkdownUtils from "../utils/MarkdownUtils.js";
+import { useContext } from "react";
+import useLoader from "../hooks/useLoader";
+import Loader from "../components/Loader";
+import { ImageSearch } from "@mui/icons-material";
 
 function MarkdownWikiMD(props) {
+    
+    const [images, setImages] = React.useState([]);
 
     let markdown = props.children;
     let markdownDisplay = "";
+    let imageIds = String(markdown).match(/!\[]\(.*?\)/g);
 
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ids: imageIds,
+        }),
+    };
+
+    useEffect(() => {
+        if(imageIds != null && images.length != imageIds.length) {
+            fetch(`${process.env.REACT_APP_ENDPOINT}/noteImage/getImagesByIds`, requestOptions)
+            .then((result) => result.json())
+            .then((output) => {
+            console.log("aaa" + JSON.stringify(output));
+            setImages(output);
+            })  
+            .catch((err) => console.error(err));
+        }
+    }, [props]);
+
+    images.map(i => {
+        console.log("![](" + i.id + ")");
+        markdown = String(markdown).replace("![](" + i.id + ")", `<img src='${i.image}'></img>`);
+    })
+    console.log(markdown);
     markdown = String(markdown).split("\n\n");
     // console.log(markdown);
     markdown.map((line) => {

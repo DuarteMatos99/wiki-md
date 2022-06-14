@@ -14,6 +14,12 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import IconButton from "@mui/material/IconButton";
 import Drawer from "@mui/material/Drawer";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import {useEffect} from 'react';
+import RequireLoader from "../components/RequireLoader";
+import useLoader from "../hooks/useLoader";
+import Loader from "../components/Loader";
+import ReactDOM from 'react-dom';
+import { useContext } from "react";
 
 import "../styles/pages/createnotepage.css";
 import Navbar from "../components/Navbar";
@@ -32,11 +38,49 @@ const CreateNotePage = () => {
     content: "",
   });
   const [open, setOpen] = React.useState(false);
+  const [noteId, setNoteId] = React.useState("");
   const [options, setOptions] = React.useState([]);
   const [replaceTag, setReplaceTag] = React.useState(false);
   const [drawerState, setDrawerState] = React.useState(false);
+  const [uploadFileName, setUploadFileName] = React.useState(" Upload Image");
+  const [imageBase64, setImage] = React.useState("image");
 
   const loading = open && options.length === 0;
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => {
+            resolve(fileReader.result);
+        };
+
+        fileReader.onerror = (error) => {
+            reject(error);
+        };
+    });
+  };
+
+  // Request to create note after page load
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: "",
+      createdBy: userInfo.id,
+    }),
+  };
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_ENDPOINT}/note`, requestOptions)
+    .then((result) => result.json())
+    .then((output) => {
+      console.log(output);
+      setNoteId(output);
+    })
+  .catch((err) => console.error(err));
+    }, []);
+  
 
   function addCodeBlock(event) {
     setNoteInfo({
@@ -180,6 +224,34 @@ const CreateNotePage = () => {
     }
   }
 
+  function uploadNotePicture(event) {
+    setUploadFileName(" " + String(event.clipboardData.files[0]).replace("C:\\fakepath\\", ""));
+    console.log(event.clipboardData.files[0]);
+    const file = event.clipboardData.files[0];
+    const base64 = convertBase64(file);
+    base64.then(function(value) {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          image: value,
+          noteId: noteId
+        }),
+      };
+      fetch(`${process.env.REACT_APP_ENDPOINT}/noteImage/saveImage`, requestOptions)
+      .then((result) => result.json())
+      .then((output) => {
+        console.log(output);
+        
+        setNoteInfo({
+          ...noteInfo,
+          content: noteInfo.content + `![](${output.id})`
+        });
+      })
+      .catch((err) => console.error(err));
+    })
+  }
+
   React.useEffect(() => {
     getTagsToOptions();
   }, [loading]);
@@ -291,6 +363,7 @@ const CreateNotePage = () => {
                 <CloseIcon fontSize="inherit" />
               </IconButton>
             </div>
+            <Loader/>
             <div>
                 <div class="create-note-markdown-textfield">
                 <TextField fullWidth
@@ -298,12 +371,14 @@ const CreateNotePage = () => {
                 multiline
                 //rows={100}
                 id="fullWidth"
-                onChange={onContentChange}/>
+                onChange={onContentChange}
+                onPaste={uploadNotePicture}/>
                 </div>
                 <div class="create-note-markdown-display">
-                <MarkdownWikiMD>{noteInfo.content}</MarkdownWikiMD>
+                <MarkdownWikiMD id="markdown-display">{noteInfo.content}</MarkdownWikiMD>
                 </div>
             </div>
+            
             
           </Drawer>
 
