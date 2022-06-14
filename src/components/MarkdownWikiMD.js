@@ -136,6 +136,21 @@ function MarkdownWikiMD(props) {
             }
         }
 
+        // Unordered List Logic
+        if(String(line).includes("- ")) {
+            let rows = String(line).split("\n");
+            line = "<ul>";
+            for(var i=0; i<rows.length; i++) {
+                if(rows[i].startsWith("- ")) {
+                    line += "<li>" + rows[i].replace("-", "") + "</li>";
+                } else {
+                    line += "</ul>" + rows[i] + "<ul>";
+                }
+                
+            }
+            line += "</ul>"
+        }
+
         markdownDisplay += `<p class="markdown-paragraph">${line}</p>`;
         markdownDisplay = markdownDisplay.replaceAll("\n", "<br/>");
 
