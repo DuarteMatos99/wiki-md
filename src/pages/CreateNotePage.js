@@ -44,6 +44,7 @@ const CreateNotePage = () => {
   const [drawerState, setDrawerState] = React.useState(false);
   const [uploadFileName, setUploadFileName] = React.useState(" Upload Image");
   const [imageBase64, setImage] = React.useState("image");
+  const { displayLoader, setDisplayLoader } = useLoader();
 
   const loading = open && options.length === 0;
 
@@ -71,16 +72,6 @@ const CreateNotePage = () => {
       createdBy: userInfo.id,
     }),
   };
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_ENDPOINT}/note`, requestOptions)
-    .then((result) => result.json())
-    .then((output) => {
-      console.log(output);
-      setNoteId(output);
-    })
-  .catch((err) => console.error(err));
-    }, []);
-  
 
   function addCodeBlock(event) {
     setNoteInfo({
@@ -235,18 +226,18 @@ const CreateNotePage = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           image: value,
-          noteId: noteId
         }),
       };
+      setDisplayLoader(true);
       fetch(`${process.env.REACT_APP_ENDPOINT}/noteImage/saveImage`, requestOptions)
       .then((result) => result.json())
       .then((output) => {
         console.log(output);
-        
         setNoteInfo({
           ...noteInfo,
           content: noteInfo.content + `![](${output.id})`
         });
+        setDisplayLoader(false);
       })
       .catch((err) => console.error(err));
     })

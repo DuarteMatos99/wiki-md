@@ -67,3 +67,7 @@
     border-radius: 5px;
     margin-top: 10px;
 }
+
+.markdown-container .markdown-paragraph {
+    margin-top: 15px;
+}

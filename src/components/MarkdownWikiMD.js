@@ -74,8 +74,8 @@ function MarkdownWikiMD(props) {
         }
         // Checkbox logic
         if(String(line).includes("[ ]") || String(line).includes("[X]")) {
-            line = String(line).replace("[ ]", "<input type=\"checkbox\">");
-            line = String(line).replace("[x]", "<input type=\"checkbox\" checked>");
+            line = String(line).replaceAll("[ ]", "<input type=\"checkbox\">");
+            line = String(line).replaceAll("[x]", "<input type=\"checkbox\" checked>");
         }
         // bold logic
         if(String(line).includes("**")) {
@@ -135,9 +135,11 @@ function MarkdownWikiMD(props) {
                 }
             }
         }
-        markdownDisplay += `<p>${line}</p>`;
-    })
 
+        markdownDisplay += `<p class="markdown-paragraph">${line}</p>`;
+        markdownDisplay = markdownDisplay.replaceAll("\n", "<br/>");
+
+    })
     
 
     return (
