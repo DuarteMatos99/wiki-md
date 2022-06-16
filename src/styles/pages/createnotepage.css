@@ -56,3 +56,29 @@
     width: 100% !important;
 }
 
+
+@media (max-width:1080px){
+    .create-note-markdown-textfield {
+        width: 100%;
+        height: calc(50vh - 48px) !important;
+        overflow-y: auto;
+    }
+
+    .create-note-markdown-textfield .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input {
+        height: calc(45vh) !important;
+    }
+
+    .create-note-markdown-textfield .css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root {
+        width: 100%;
+        height: calc(50vh - 48px) !important;
+    }
+
+    .css-n6v7qi-MuiPaper-root-MuiDrawer-paper {
+        width: 100% !important;
+    }
+
+    .create-note-markdown-display {
+        width: 100%;
+        height: calc(50vh);
+    }
+}

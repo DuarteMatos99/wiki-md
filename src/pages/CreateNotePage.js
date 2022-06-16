@@ -90,10 +90,8 @@ const CreateNotePage = () => {
       .toString()
       .split("\n")
       .map((line) => {
-        console.log(line);
         tmp += "> " + line + "\n";
       });
-    console.log(tmp);
     setNoteInfo({
       ...noteInfo,
       content: noteInfo.content.replace(window.getSelection(), tmp),
@@ -217,7 +215,6 @@ const CreateNotePage = () => {
 
   function uploadNotePicture(event) {
     setUploadFileName(" " + String(event.clipboardData.files[0]).replace("C:\\fakepath\\", ""));
-    console.log(event.clipboardData.files[0]);
     const file = event.clipboardData.files[0];
     const base64 = convertBase64(file);
     base64.then(function(value) {
@@ -232,7 +229,6 @@ const CreateNotePage = () => {
       fetch(`${process.env.REACT_APP_ENDPOINT}/noteImage/saveImage`, requestOptions)
       .then((result) => result.json())
       .then((output) => {
-        console.log(output);
         setNoteInfo({
           ...noteInfo,
           content: noteInfo.content + `![](${output.id})`

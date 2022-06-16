@@ -70,6 +70,7 @@
 
 .markdown-container .markdown-paragraph {
     margin-top: 15px;
+    color: #000000;
 }
 
 .markdown-unordered-list {
@@ -78,4 +79,9 @@
 
 .markdown-ordered-list {
     padding-left: 30px;
+}
+
+.markdown-href {
+    color: #85dbcf !important; /* old color - #30e3ca */
+    text-decoration: underline;
 }

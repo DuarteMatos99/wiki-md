@@ -35,15 +35,14 @@ function MarkdownWikiMD(props) {
         }
     }, [props]);
 
-    images.map(i => {
+    images?.map(i => {
         console.log("![](" + i.id + ")");
         markdown = String(markdown).replace("![](" + i.id + ")", `<img src='${i.image}'></img>`);
     })
-    console.log(markdown);
+
     markdown = String(markdown).split("\n\n");
     // console.log(markdown);
     markdown.map((line) => {
-        // console.log(line);
         // Blockquote syntax
         if(String(line).startsWith(">")) {
             let lines = line.split("\n")
@@ -64,6 +63,7 @@ function MarkdownWikiMD(props) {
             line += "</div>".repeat(blockQuoteCounter);
             // line += String("</div>").repeat(4);
         }
+
         // Header logic
         if(String(line).includes("#")) {
             line = String(line).replace("##### ", "<h5>") + "</h1>";
@@ -167,6 +167,14 @@ function MarkdownWikiMD(props) {
                 counter++;
             }
             line += "</ol>"
+        }
+
+        let urls = String(line).match(/(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g);
+        if(urls?.length > 0) {
+            urls.map(url => {
+                console.log(url);
+                line = line.replaceAll(url, `<a class="markdown-href" target="_blank" href=\"${url}\">${url}</a>`);
+            })
         }
 
         markdownDisplay += `<p class="markdown-paragraph">${line}</p>`;
