@@ -2,38 +2,81 @@ import { React, useState, useEffect } from "react";
 import Panel from "./Panel";
 import "../styles/components/allpanels.css";
 import Button from "@mui/material/Button";
+import TextField from '@mui/material/TextField';
 import axios from "axios";
 
 function AllPanels() {
     const [notes, setNotes] = useState([]);
     const [page, setCounter] = useState(0);
+    const [searchTerm, setSearchTerm] = useState('');
+    let hasStarted = false;
+
 
     useEffect(() => {
-        fetch(
-            `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=4`
-        )
-            .then((result) => result.json())
-            .then((output) => {
-                setCounter(page + 1);
-                setNotes(output);
-            })
-            .catch((err) => console.error(err));
-    }, []);
+        if(searchTerm == '') {
+            fetch(
+                `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${0}&itemsPerPage=4&filter=${searchTerm}`
+            )
+                .then((result) => result.json())
+                .then((output) => {
+                    setNotes(output);
+                    setCounter(0);
+                })
+                .catch((err) => console.error(err));
+        } else {
+        const delayDebounceFn = setTimeout(() => {
+            console.log(searchTerm)
+            fetch(
+                `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${0}&itemsPerPage=4&filter=${searchTerm}`
+            )
+                .then((result) => result.json())
+                .then((output) => {
+                    setNotes(output);
+                    setCounter(0);
+                })
+                .catch((err) => console.error(err));
+          }, 2000)
+            return () => clearTimeout(delayDebounceFn)
+        }
+    }, [searchTerm]);
 
     const handleClick = () => {
-        axios
-            .get(
-                `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page}&itemsPerPage=4`
-            )
-            .then((res) => {
-                setCounter(page + 1);
-                setNotes(notes.concat(res.data));
-            });
+        
+        console.log(page);
+        
+        console.log(page + 1);
+        axios.get(
+            `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page+1}&itemsPerPage=4&filter=${searchTerm}`
+        )
+        .then((res) => {
+            setNotes(notes.concat(res.data));
+            setCounter(page + 1);
+        });
     };
+
+    function onSearchChange(event) {
+        console.log(event.target.value);
+    }
 
     return (
         <div className="all-files">
-            <h3 className="title">All Files</h3>
+            <div>
+                <div class="all-files-title-wrapper">
+                    <div>
+                        <h3 className="title">All Files</h3>
+                    </div>
+                </div>
+                <div class="all-files-search-wrapper">
+                    <TextField
+                    fullWidth
+                    id="standard-search"
+                    label="Search field"
+                    type="search"
+                    variant="standard"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+            </div>
             <div className="panels-area">
                 {notes.map((note) => {
                     return (

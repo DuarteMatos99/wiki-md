@@ -23,3 +23,23 @@
     background-color: #30e3ca;
     color: black;
 }
+
+.all-files-title-wrapper {
+    width: 75%;
+    float: left;
+}
+
+.all-files-search-wrapper {
+    width: 25%;
+    float: right;
+    transform: translateY(-22px);
+    padding: 0 5% 0 0;
+}
+
+.all-files-search-wrapper .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+    color: #30e3ca !important;
+}
+
+.all-files-search-wrapper .css-ghsjzk-MuiInputBase-root-MuiInput-root::after {
+    border-bottom-color: #30e3ca !important;
+}
