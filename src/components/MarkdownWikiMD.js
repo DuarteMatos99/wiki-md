@@ -2,10 +2,6 @@ import React from "react";
 import {useEffect} from 'react';
 import "../styles/components/markdownwikimd.css";
 import MarkdownUtils from "../utils/MarkdownUtils.js";
-import { useContext } from "react";
-import useLoader from "../hooks/useLoader";
-import Loader from "../components/Loader";
-import { ImageSearch } from "@mui/icons-material";
 
 function MarkdownWikiMD(props) {
     
@@ -39,6 +35,7 @@ function MarkdownWikiMD(props) {
         return fimages;
     }
 
+
     useEffect(() => {
         imageIds = removeRepeatedImages(imageIds);
         if(imageIds != null && images?.length != imageIds?.length) {
@@ -46,8 +43,7 @@ function MarkdownWikiMD(props) {
             .then((result) => result.json())
             .then((output) => {
             setImages(output);
-            })  
-            .catch((err) => console.error(err));
+            }).catch((err) => console.error(err));
         }
     }, [props]);
 
@@ -56,6 +52,7 @@ function MarkdownWikiMD(props) {
     })
 
     markdown = String(markdown).split("\n\n");
+    // TODO rename line w block
     markdown.map((line) => {
         // Blockquote syntax
         if(String(line).startsWith(">")) {
@@ -183,6 +180,7 @@ function MarkdownWikiMD(props) {
             line += "</ol>"
         }
 
+        // Markdown URL Logic
         let urls = String(line).match(/(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g);
         if(urls?.length > 0) {
             urls.map(url => {
@@ -191,11 +189,16 @@ function MarkdownWikiMD(props) {
             })
         }
 
+        // Add spacing on empty blocks
+        if(String(line) == "") {
+            console.log("empty")
+            line += "<br><br>";
+        }
+
         markdownDisplay += `<p class="markdown-paragraph">${line}</p>`;
         markdownDisplay = markdownDisplay.replaceAll("\n", "<br/>");
 
     })
-    
 
     return (
         <div className="markdown-container" dangerouslySetInnerHTML={{__html: markdownDisplay}}></div>

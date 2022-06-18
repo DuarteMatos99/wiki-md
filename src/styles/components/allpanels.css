@@ -25,15 +25,15 @@
 }
 
 .all-files-title-wrapper {
-    width: 75%;
+    width: 80%;
     float: left;
 }
 
 .all-files-search-wrapper {
-    width: 25%;
+    width: 20%;
     float: right;
     transform: translateY(-22px);
-    padding: 0 5% 0 0;
+    padding: 0 2% 0 0;
 }
 
 .all-files-search-wrapper .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
@@ -42,4 +42,24 @@
 
 .all-files-search-wrapper .css-ghsjzk-MuiInputBase-root-MuiInput-root::after {
     border-bottom-color: #30e3ca !important;
+}
+
+@media screen and (max-width: 1100px) {
+    .all-files-title-wrapper {
+        width: 75%;
+    }
+    
+    .all-files-search-wrapper {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .all-files-title-wrapper {
+        width: 70%;
+    }
+    
+    .all-files-search-wrapper {
+        width: 30%;
+    }
 }

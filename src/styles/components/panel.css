@@ -5,7 +5,7 @@ p {
 .panel {
     float: left;
     background-color: #e4f9f5;
-    width: 22%; /* 270px before */
+    width: 23%; /* 270px before */
     border-radius: 10px;
     margin: 0 1% 20px;
     padding: 20px 12px;
@@ -74,4 +74,35 @@ p {
     background-color: #00000045;
     padding: 0 4px 2px 6px;
     margin: 0 2px 2px 0;
+}
+
+@media screen and (max-width: 1500px) {
+    .panel {
+        width: 31%;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .panel {
+        width: 48%;
+    }
+    .background-panel {
+        top: 30px;
+        width: 80%;
+        height: 400px;
+        left: 50%;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .panel {
+        width: 98%;
+    }
+
+    .background-panel {
+        width: 80%;
+        height: 500px;
+        left: 50%;
+    }
 }

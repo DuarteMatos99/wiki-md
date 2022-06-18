@@ -60,7 +60,7 @@ function AllPanels() {
                     <TextField
                     fullWidth
                     id="standard-search"
-                    label="Search field"
+                    label="Search"
                     type="search"
                     variant="standard"
                     onChange={(e) => setSearchTerm(e.target.value)}
