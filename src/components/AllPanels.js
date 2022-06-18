@@ -71,7 +71,7 @@ function AllPanels() {
                 {notes.map((note) => {
                     return (
                         <Panel
-                            id={note.id}
+                            noteId={note.id}
                             title={note.title}
                             key={note.id}
                             creatorId={note.createdBy.id}

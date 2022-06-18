@@ -240,7 +240,7 @@ function EditNotePage() {
             }),
           };
           setDisplayLoader(true);
-          fetch(`${process.env.REACT_APP_ENDPOINT}/noteImage/saveImage`, requestOptions)
+          fetch(`${process.env.REACT_APP_ENDPOINT}/image/saveImage`, requestOptions)
           .then((result) => result.json())
           .then((output) => {
             setNoteInfo({

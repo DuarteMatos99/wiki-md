@@ -42,7 +42,7 @@ function MarkdownWikiMD(props) {
     useEffect(() => {
         imageIds = removeRepeatedImages(imageIds);
         if(imageIds != null && images?.length != imageIds?.length) {
-            fetch(`${process.env.REACT_APP_ENDPOINT}/noteImage/getImagesByIds`, requestOptions)
+            fetch(`${process.env.REACT_APP_ENDPOINT}/image/getImagesByIds`, requestOptions)
             .then((result) => result.json())
             .then((output) => {
             setImages(output);
