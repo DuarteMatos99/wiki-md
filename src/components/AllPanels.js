@@ -9,8 +9,6 @@ function AllPanels() {
     const [notes, setNotes] = useState([]);
     const [page, setCounter] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
-    let hasStarted = false;
-
 
     useEffect(() => {
         if(searchTerm == '') {
@@ -41,10 +39,6 @@ function AllPanels() {
     }, [searchTerm]);
 
     const handleClick = () => {
-        
-        console.log(page);
-        
-        console.log(page + 1);
         axios.get(
             `${process.env.REACT_APP_ENDPOINT}/note/getNotesByPage?page=${page+1}&itemsPerPage=4&filter=${searchTerm}`
         )
@@ -53,10 +47,6 @@ function AllPanels() {
             setCounter(page + 1);
         });
     };
-
-    function onSearchChange(event) {
-        console.log(event.target.value);
-    }
 
     return (
         <div className="all-files">

@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import TagIcon from "@mui/icons-material/Tag";
 import CodeIcon from "@mui/icons-material/Code";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import Loader from "../components/Loader";
 
 import "../styles/pages/createnotepage.css";
 import Notification from "../components/Notification";
@@ -39,7 +40,24 @@ function EditNotePage() {
     const [options, setOptions] = React.useState([]);
     const [replaceTag, setReplaceTag] = React.useState(false);
     const [drawerState, setDrawerState] = React.useState(false);
+    const [uploadFileName, setUploadFileName] = React.useState(" Upload Image");
+    const [imageBase64, setImage] = React.useState("image");
     const loading = open && options.length === 0;
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+    
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+    
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
     function addHashtag(event) {
         setNoteInfo({
@@ -209,6 +227,32 @@ function EditNotePage() {
         }
     }
 
+    function uploadNotePicture(event) {
+        setUploadFileName(" " + String(event.clipboardData.files[0]).replace("C:\\fakepath\\", ""));
+        const file = event.clipboardData.files[0];
+        const base64 = convertBase64(file);
+        base64.then(function(value) {
+          const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              image: value,
+            }),
+          };
+          setDisplayLoader(true);
+          fetch(`${process.env.REACT_APP_ENDPOINT}/noteImage/saveImage`, requestOptions)
+          .then((result) => result.json())
+          .then((output) => {
+            setNoteInfo({
+              ...noteInfo,
+              content: noteInfo.content + `![](${output.id})`
+            });
+            setDisplayLoader(false);
+          })
+          .catch((err) => console.error(err));
+        })
+    }
+
     React.useEffect(() => {
         getDataNote();
     }, []);
@@ -226,6 +270,7 @@ function EditNotePage() {
     return (
         <div>
             <Navbar />
+            <Loader/>
             <div className="create-note-page">
                 <h1>Edit Note</h1>
                 <div className="new-note-form">
@@ -296,9 +341,10 @@ function EditNotePage() {
                                 fullWidth
                                 label="Content"
                                 multiline
-                                rows={10}
+                                rows={12}
                                 id="fullWidth"
                                 onChange={onContentChange}
+                                onPaste={uploadNotePicture}
                             />
                         </Box>
                     </div>
@@ -320,24 +366,35 @@ function EditNotePage() {
                     >
                         <VisibilityIcon />
                     </IconButton>
+
                     <Drawer
                         id="create-note-drawer"
                         anchor="a"
                         open={drawerState}
                         onClose={toggleDrawer(drawerState, false)}
-                    >
+                        >
                         <div class="close-create-note-drawer-wrapper">
                             <IconButton
-                                aria-label="delete"
-                                size="small"
-                                onClick={toggleDrawer(drawerState, false)}
+                            aria-label="delete"
+                            size="small"
+                            onClick={toggleDrawer(drawerState, false)}
                             >
-                                <CloseIcon fontSize="inherit" />
+                            <CloseIcon fontSize="inherit" />
                             </IconButton>
                         </div>
-                        <div class="create-note-markdown-display">
-                            <MarkdownWikiMD>{noteInfo.content}</MarkdownWikiMD>
-                        </div>
+                            <div>
+                                <div class="create-note-markdown-textfield">
+                                <TextField fullWidth
+                                value={noteInfo.content}
+                                multiline
+                                id="fullWidth"
+                                onChange={onContentChange}
+                                onPaste={uploadNotePicture}/>
+                                </div>
+                                <div class="create-note-markdown-display">
+                                <MarkdownWikiMD id="markdown-display">{noteInfo.content}</MarkdownWikiMD>
+                            </div>
+                        </div> 
                     </Drawer>
 
                     <Button

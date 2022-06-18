@@ -19,7 +19,7 @@ function UserProfilePage() {
             .catch((err) => console.error(err));
     }, []);
 
-    function permissionTitle(perm) {
+    function permissiOnTitle(perm) {
         let title = ""
         if(perm == 0) {
             title = "User";
@@ -49,7 +49,7 @@ function UserProfilePage() {
                             <div className="name">
                                 <h2>{userProfile.user?.name}</h2>
                             </div>
-                            {userProfile.permLevel == 1 ? (
+                            {userProfile.permLevel > 1 ? (
                             <div className="nameCheckmark">
                                 <CheckCircleIcon />
                             </div>) : (
@@ -63,7 +63,7 @@ function UserProfilePage() {
                 <div class="user-card-stat">
                     <p>Member since {userProfile.created_at}</p>
                     <p>Created {userProfile.count_cards} cards</p>
-                    <p>{permissionTitle(userProfile.user?.permLevel)}</p>
+                    <p>{permissiOnTitle(userProfile.user?.permLevel)}</p>
                 </div>
                 <div className="clearFloat"></div>
                 <PanelsList profileId={window.location.pathname.split("/")[2]}/>

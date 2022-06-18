@@ -252,6 +252,7 @@ const CreateNotePage = () => {
   return (
     <div>
       <Navbar />
+      <Loader/>
       <div className="create-note-page">
         <h1>Create Note</h1>
         <div className="new-note-form">
@@ -265,7 +266,6 @@ const CreateNotePage = () => {
           </div>
 
           <br />
-
           <Autocomplete
             multiple
             id="asynchronous-demo"
@@ -311,9 +311,10 @@ const CreateNotePage = () => {
                 fullWidth
                 label="Content"
                 multiline
-                rows={10}
+                rows={12}
                 id="fullWidth"
                 onChange={onContentChange}
+                onPaste={uploadNotePicture}
               />
             </Box>
           </div>
@@ -337,34 +338,33 @@ const CreateNotePage = () => {
           </IconButton>
           <Drawer
             id="create-note-drawer"
-            anchor="a"
+            anchor="top"
             open={drawerState}
             onClose={toggleDrawer(drawerState, false)}
           >
-            <div class="close-create-note-drawer-wrapper">
-              <IconButton
-                aria-label="delete"
-                size="small"
-                onClick={toggleDrawer(drawerState, false)}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            </div>
-            <Loader/>
+          <div className="close-create-note-drawer-wrapper">
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={toggleDrawer(drawerState, false)}
+            >
+            <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </div>
+            
             <div>
-                <div class="create-note-markdown-textfield">
+                <div className="create-note-markdown-textfield">
                 <TextField fullWidth
                 value={noteInfo.content}
                 multiline
-                //rows={100}
                 id="fullWidth"
                 onChange={onContentChange}
                 onPaste={uploadNotePicture}/>
                 </div>
-                <div class="create-note-markdown-display">
+                <div className="create-note-markdown-display">
                 <MarkdownWikiMD id="markdown-display">{noteInfo.content}</MarkdownWikiMD>
-                </div>
-            </div>
+              </div>
+          </div>
             
             
           </Drawer>

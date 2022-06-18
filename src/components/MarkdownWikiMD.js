@@ -23,12 +23,28 @@ function MarkdownWikiMD(props) {
         }),
     };
 
+    function removeRepeatedImages(fimages) {
+        var count;
+        for(var i=0;i < fimages?.length; i++) {
+            count = 0;
+            for(var x=0; x < fimages?.length; x++) {
+                if(fimages[i] == fimages[x]) {
+                    count++;
+                }
+                if(count > 1) {
+                    fimages.splice(x , 1);
+                }
+            }
+        }
+        return fimages;
+    }
+
     useEffect(() => {
-        if(imageIds != null && images.length != imageIds.length) {
+        imageIds = removeRepeatedImages(imageIds);
+        if(imageIds != null && images?.length != imageIds?.length) {
             fetch(`${process.env.REACT_APP_ENDPOINT}/noteImage/getImagesByIds`, requestOptions)
             .then((result) => result.json())
             .then((output) => {
-            console.log("aaa" + JSON.stringify(output));
             setImages(output);
             })  
             .catch((err) => console.error(err));
@@ -36,12 +52,10 @@ function MarkdownWikiMD(props) {
     }, [props]);
 
     images?.map(i => {
-        console.log("![](" + i.id + ")");
-        markdown = String(markdown).replace("![](" + i.id + ")", `<img src='${i.image}'></img>`);
+        markdown = String(markdown).replaceAll("![](" + i.id + ")", `<img src='${i.image}'></img>`);
     })
 
     markdown = String(markdown).split("\n\n");
-    // console.log(markdown);
     markdown.map((line) => {
         // Blockquote syntax
         if(String(line).startsWith(">")) {
@@ -184,7 +198,7 @@ function MarkdownWikiMD(props) {
     
 
     return (
-        <div class="markdown-container" dangerouslySetInnerHTML={{__html: markdownDisplay}}></div>
+        <div className="markdown-container" dangerouslySetInnerHTML={{__html: markdownDisplay}}></div>
     )
 }
 
