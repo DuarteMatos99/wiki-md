@@ -24,7 +24,7 @@ function Panel(props) {
 
     return (
         <div className="panel">
-            <Link to={"/note/" + props.id}>
+            <Link to={"/note/" + props.noteId}>
                 <div className="background-panel"></div>
                 <div className="info-panel">
                     <div className="title">

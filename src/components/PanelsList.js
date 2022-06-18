@@ -22,7 +22,7 @@ function PanelsList(props) {
     console.log(notes);
 
     return (
-        <div class="note-card-list-wrapper">
+        <div className="note-card-list-wrapper">
             {notes.map((note) => {
                 return (
                     <Link to={"/note/" + note.id}>

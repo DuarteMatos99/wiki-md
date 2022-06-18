@@ -20,12 +20,12 @@ function RecentPanels() {
         <div className="recent-files">
             <h3 className="title">Recent Files</h3>
             <div className="panels-area">
-                {notes.map((note) => {
+                {notes.map((note, index) => {
                     return (
                         <Panel
-                            id={note.id}
+                            noteId={note.id}
                             title={note.title}
-                            key={note.id}
+                            key={index}
                             creatorId={note.createdBy.id}
                             creatorImage={note.createdBy.image}
                             creator={note.createdBy.username}

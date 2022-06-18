@@ -51,12 +51,12 @@ function AllPanels() {
     return (
         <div className="all-files">
             <div>
-                <div class="all-files-title-wrapper">
+                <div className="all-files-title-wrapper">
                     <div>
                         <h3 className="title">All Files</h3>
                     </div>
                 </div>
-                <div class="all-files-search-wrapper">
+                <div className="all-files-search-wrapper">
                     <TextField
                     fullWidth
                     id="standard-search"

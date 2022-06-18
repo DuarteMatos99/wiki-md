@@ -35,7 +35,7 @@ function UserProfilePage() {
         <div>
             <Navbar />
             <div className="profilePage">
-                <div class="user-card">
+                <div className="user-card">
                     <div className="image">
                         <img
                             src={userProfile.user?.image}
@@ -60,7 +60,7 @@ function UserProfilePage() {
                         {`@${userProfile.user?.username}`}
                     </div>
                 </div>
-                <div class="user-card-stat">
+                <div className="user-card-stat">
                     <p>Member since {userProfile.created_at}</p>
                     <p>Created {userProfile.count_cards} cards</p>
                     <p>{permissiOnTitle(userProfile.user?.permLevel)}</p>
