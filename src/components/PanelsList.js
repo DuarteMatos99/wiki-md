@@ -1,10 +1,13 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/components/panelslist.css";
+import useTheme from "../hooks/useTheme";
+
 
 function PanelsList(props) {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const [notes, setNotes] = useState([]);
+    const { displayTheme, setDisplayTheme } = useTheme();
 
     useEffect(() => {
         // Update the document title using the browser API

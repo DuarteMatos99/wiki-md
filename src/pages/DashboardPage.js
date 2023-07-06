@@ -9,16 +9,27 @@ import useAlert from "../hooks/useAlert";
 import "../styles/pages/dashboardpage.css";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
+import useTheme from "../hooks/useTheme";
+import { useNavigate } from "react-router-dom"; 
 
 function DashboardPage() {
+    const navigate = useNavigate();
+
     const { displayAlert, setDisplayAlert } = useAlert();
+    const { displayTheme, setDisplayTheme } = useTheme();
+
     let dashboardIcon = <EditIcon/>
     let dashboardOptionList = [{ name: "Create New Note",
                                 icon: <AddIcon/>,
-                                linkTo: "../create-note"}]
+                                linkTo: "../create-note",
+                                onClickFunc: navigateToCreatePage}]
+
+    function navigateToCreatePage() {
+        navigate(`../create-note`);
+    }
 
     return (
-        <div className="dashboard-page">
+        <div className={displayTheme ? 'dashboard-page-black' : 'dashboard-page-white'}>
             <Navbar />
             <RecentPanels />
             <Separator />

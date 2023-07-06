@@ -9,13 +9,14 @@ import NewNoteDial from "../components/NewNoteDial";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom"; 
-
+import useTheme from "../hooks/useTheme";
 
 
 function DisplayNotePage() {
     const navigate = useNavigate();
     const [note, setNotes] = useState([]);
     const { setDisplayLoader } = useLoader();
+    const { displayTheme, setDisplayTheme } = useTheme();
     
     const id_from_url = window.location.pathname.split("/")[2];
     const tags = note?.tags?.split(",").filter(String);
@@ -23,11 +24,15 @@ function DisplayNotePage() {
     const userData = JSON.parse(localStorage.getItem("user"))
     let dashboardOptionList = [{name: "Edit Note",
                                 icon: <EditIcon/>,
-                                linkTo: `../edit-note/${id_from_url}`},
+                                onClickFunc: navigateToEditPage},
                                {name: "Delete Note",
                                 icon: <DeleteIcon/>,
                                 linkTo: "",
                                 onClickFunc: deleteButtonFunc}]
+
+    function navigateToEditPage() {
+        navigate(`../edit-note/${id_from_url}`)
+    }
 
     function deleteButtonFunc() {
         const requestOptions = {
@@ -68,6 +73,7 @@ function DisplayNotePage() {
         <div>
             <Navbar />
             <RequireLoader>
+                <div className={displayTheme ? "display-note-page-wrapper-dark" : "display-note-page-wrapper-white"}>
                 <div className="display-note-page">
                     <h1 className="display-note-page-title">{note.title}</h1>
                     <div>
@@ -78,6 +84,7 @@ function DisplayNotePage() {
                     <Separator />
                     <MarkdownWikiMD>{note.content}</MarkdownWikiMD>
                     <p>{note.createdBy?.username}</p>
+                </div>
                 </div>
                 <NewNoteDial optionList={dashboardOptionList}/>
             </RequireLoader>

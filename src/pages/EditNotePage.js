@@ -16,6 +16,8 @@ import TagIcon from "@mui/icons-material/Tag";
 import CodeIcon from "@mui/icons-material/Code";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import Loader from "../components/Loader";
+import useTheme from "../hooks/useTheme";
+import { makeStyles } from "@material-ui/core/styles";
 
 import "../styles/pages/createnotepage.css";
 import Notification from "../components/Notification";
@@ -24,12 +26,42 @@ import MarkdownWikiMD from "../components/MarkdownWikiMD.js";
 import useLoader from "../hooks/useLoader";
 import RequireLoader from "../components/RequireLoader";
 
+const useStyles = makeStyles({
+    root: {
+      "& .MuiOutlinedInput-root:hover": {
+        "& > fieldset": {
+          borderColor: "#30e3ca"
+        }
+      },
+      // input label when focused
+      "& label.Mui-focused": {
+        color: "#30e3ca"
+      },
+      // focused color for input with variant='standard'
+      "& .MuiInput-underline:after": {
+        borderBottomColor: "#30e3ca"
+      },
+      // focused color for input with variant='filled'
+      "& .MuiFilledInput-underline:after": {
+        borderBottomColor: "#30e3ca"
+      },
+      // focused color for input with variant='outlined'
+      "& .MuiOutlinedInput-root": {
+        "&.Mui-focused fieldset": {
+          borderColor: "#30e3ca"
+        }
+      }
+    }
+  });
+
 function EditNotePage() {
+    const classes = useStyles();
     const navigate = useNavigate();
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const { setDisplayLoader } = useLoader();
     const { displayAlert, setDisplayAlert } = useAlert();
+    const { displayTheme, setDisplayTheme } = useTheme();
 
     const [noteInfo, setNoteInfo] = React.useState({
         content: "",
@@ -268,7 +300,7 @@ function EditNotePage() {
     }, [open]);
 
     return (
-        <div>
+        <div className={displayTheme ? "create-note-page-wrapper-black" : "create-note-page-wrapper-white"}>
             <Navbar />
             <Loader/>
             <div className="create-note-page">
@@ -277,6 +309,7 @@ function EditNotePage() {
                     <div className="note-input-wrapper">
                         <TextField
                             id="outlined-basic"
+                            className={classes.root}
                             label="Title"
                             variant="outlined"
                             value={noteInfo.title}
@@ -312,6 +345,7 @@ function EditNotePage() {
                                 <TextField
                                     {...params}
                                     onChange={onAutoCompleteChange}
+                                    className={classes.root}
                                     label="Tags"
                                     InputProps={{
                                         ...params.InputProps,
@@ -338,6 +372,7 @@ function EditNotePage() {
                         <Box sx={{ width: maxWidth, maxWidth: "100%" }}>
                             <TextField
                                 value={noteInfo.content}
+                                className={classes.root}
                                 fullWidth
                                 label="Content"
                                 multiline
@@ -373,7 +408,7 @@ function EditNotePage() {
                         open={drawerState}
                         onClose={toggleDrawer(drawerState, false)}
                         >
-                        <div class="close-create-note-drawer-wrapper">
+                        <div class={displayTheme? "close-create-note-drawer-wrapper-black" : "close-create-note-drawer-wrapper"}>
                             <IconButton
                             aria-label="delete"
                             size="small"
@@ -383,15 +418,16 @@ function EditNotePage() {
                             </IconButton>
                         </div>
                             <div>
-                                <div class="create-note-markdown-textfield">
+                                <div class={displayTheme ? "create-note-markdown-textfield-black" : "create-note-markdown-textfield"}>
                                 <TextField fullWidth
                                 value={noteInfo.content}
+                                className={classes.root}
                                 multiline
                                 id="fullWidth"
                                 onChange={onContentChange}
                                 onPaste={uploadNotePicture}/>
                                 </div>
-                                <div class="create-note-markdown-display">
+                                <div class={displayTheme ? "create-note-markdown-display-black" : "create-note-markdown-display"}>
                                 <MarkdownWikiMD id="markdown-display">{noteInfo.content}</MarkdownWikiMD>
                             </div>
                         </div> 

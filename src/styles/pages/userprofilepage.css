@@ -1,3 +1,9 @@
+.profilePage-wrapper-white {
+    height: 100vh;
+    background-color: white;
+    color: black;
+}
+
 .profilePage{
     margin: 5% 10%;
 }
@@ -37,5 +43,13 @@
 .clearFloat {
     clear: both;
     margin-bottom: 25px;
+}
+
+/* Black Theme */
+
+.profilePage-wrapper-black {
+    height: 100vh;
+    background-color: #222831;
+    color: white;
 }
 

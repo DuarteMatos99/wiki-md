@@ -3,6 +3,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import "../styles/components/profileicon.css";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { Link } from "react-router-dom";
 
 export default function ProfileIcon() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
@@ -34,7 +35,9 @@ export default function ProfileIcon() {
                 }}
             >
                 <MenuItem onClick={handleClose}>
-                    <a href={"/profile/" + userInfo.id }>My account</a>
+                    <Link to={"/profile/" + userInfo.id}>
+                    <a>My account</a>
+                    </Link>
                 </MenuItem>
                 <MenuItem onClick={() => localStorage.removeItem("user")}>
                     <a href="/login">Logout</a>

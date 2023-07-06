@@ -5,6 +5,7 @@ import App from "./App";
 import { AuthProvider } from "./context/AuthProvider";
 import { AlertProvider } from "./context/AlertProvider";
 import { LoaderProvider } from "./context/LoaderProvider";
+import { ThemeProvider } from "./context/ThemeProvider";
 
 const rootElement = document.getElementById("root");
 
@@ -13,7 +14,9 @@ ReactDOM.render(
         <AuthProvider>
             <AlertProvider>
                 <LoaderProvider>
-                    <App />
+                    <ThemeProvider>
+                        <App />
+                    </ThemeProvider>
                 </LoaderProvider>
             </AlertProvider>
         </AuthProvider>

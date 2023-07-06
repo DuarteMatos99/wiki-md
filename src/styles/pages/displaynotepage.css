@@ -1,5 +1,10 @@
+.display-note-page-wrapper-white {
+    background-color: white;
+    min-height: 100vh;
+}
+
 .display-note-page {
-    margin: 5% 10%;
+    padding: 5% 10%;
 }
 
 .display-note-page-title {
@@ -28,4 +33,20 @@
 /* markdown */
 .react-markdown {
     margin: 4% 0;
+}
+
+/* dark theme */
+
+.display-note-page-wrapper-dark {
+    background-color: #222831;
+    color: white;
+    min-height: 100vh;
+}
+
+.display-note-page-wrapper-dark .markdown-container, .display-note-page-wrapper-dark .markdown-container, .display-note-page-wrapper-dark .markdown-container .italic {
+    color: white !important;
+}
+
+.display-note-page-wrapper-dark .markdown-container .markdown-table tr:nth-of-type(even) {
+    background-color: #3a404bcc !important;
 }

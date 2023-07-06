@@ -63,3 +63,11 @@
         width: 30%;
     }
 }
+
+/* black theme */
+
+.all-files-black {
+    color: white;
+    background-color: #222831;
+    padding: 30px 9%;
+}

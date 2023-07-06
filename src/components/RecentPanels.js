@@ -1,9 +1,12 @@
 import { React, useState, useEffect } from "react";
 import Panel from "./Panel";
 import "../styles/components/recentpanels.css";
+import EditIcon from "@mui/icons-material/Edit";
+import useTheme from "../hooks/useTheme";
 
 function RecentPanels() {
     const [notes, setNotes] = useState([]);
+    const { displayTheme, setDisplayTheme } = useTheme();
 
     useEffect(() => {
         // Update the document title using the browser API
@@ -17,7 +20,7 @@ function RecentPanels() {
     }, []);
 
     return (
-        <div className="recent-files">
+        <div className={displayTheme ? "recent-files-black" : "recent-files-white"}>
             <h3 className="title">Recent Files</h3>
             <div className="panels-area">
                 {notes.map((note, index) => {

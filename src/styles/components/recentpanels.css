@@ -1,5 +1,6 @@
-.recent-files {
+.recent-files-white {
     padding: 30px 9%;
+    background-color: white;
 }
 
 .title {
@@ -11,3 +12,10 @@
     display: flex;
     margin-top: 20px;
 }
+
+.recent-files-black {
+    padding: 30px 9%;
+    background-color: #222831;
+    color: white;
+}
+

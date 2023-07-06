@@ -3,10 +3,12 @@ import "../styles/pages/userprofilepage.css";
 import Navbar from "../components/Navbar";
 import PanelsList from "../components/PanelsList";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import useTheme from "../hooks/useTheme";
 
 function UserProfilePage() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const [userProfile, setUserProfile] =  useState({});
+    var { displayTheme, setDisplayTheme } = useTheme();
 
     useEffect(() => {
         // Update the document title using the browser API
@@ -32,7 +34,7 @@ function UserProfilePage() {
     }
 
     return (
-        <div>
+        <div className={displayTheme ? "profilePage-wrapper-black" : "profilePage-wrapper-white"}>
             <Navbar />
             <div className="profilePage">
                 <div className="user-card">

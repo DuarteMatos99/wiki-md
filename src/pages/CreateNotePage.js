@@ -20,17 +20,50 @@ import useLoader from "../hooks/useLoader";
 import Loader from "../components/Loader";
 import ReactDOM from 'react-dom';
 import { useContext } from "react";
+import useTheme from "../hooks/useTheme";
 
 import "../styles/pages/createnotepage.css";
 import Navbar from "../components/Navbar";
 import Notification from "../components/Notification";
 import useAlert from "../hooks/useAlert";
 import MarkdownWikiMD from "../components/MarkdownWikiMD.js";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiOutlinedInput-root:hover": {
+      "& > fieldset": {
+        borderColor: "#30e3ca"
+      }
+    },
+    // input label when focused
+    "& label.Mui-focused": {
+      color: "#30e3ca"
+    },
+    // focused color for input with variant='standard'
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#30e3ca"
+    },
+    // focused color for input with variant='filled'
+    "& .MuiFilledInput-underline:after": {
+      borderBottomColor: "#30e3ca"
+    },
+    // focused color for input with variant='outlined'
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        borderColor: "#30e3ca"
+      }
+    }
+  }
+});
 
 const CreateNotePage = () => {
   let navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("user"));
 
+  const classes = useStyles();
+
+  const { displayTheme, setDisplayTheme } = useTheme();
   const { displayAlert, setDisplayAlert } = useAlert();
   const [noteInfo, setNoteInfo] = React.useState({
     title: "",
@@ -249,8 +282,10 @@ const CreateNotePage = () => {
     }
   }, [open]);
 
+  
+
   return (
-    <div>
+    <div className={displayTheme ? "create-note-page-wrapper-black" : "create-note-page-wrapper-white"}>
       <Navbar />
       <Loader/>
       <div className="create-note-page">
@@ -258,6 +293,7 @@ const CreateNotePage = () => {
         <div className="new-note-form">
           <div className="note-input-wrapper">
             <TextField
+              className={classes.root}
               id="outlined-basic"
               label="Title"
               variant="outlined"
@@ -285,6 +321,7 @@ const CreateNotePage = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
+                className={classes.root}
                 onChange={onAutoCompleteChange}
                 label="Tags"
                 InputProps={{
@@ -307,6 +344,7 @@ const CreateNotePage = () => {
           <div className="note-input-wrapper">
             <Box sx={{ width: maxWidth, maxWidth: "100%" }}>
               <TextField
+                className={classes.root}
                 value={noteInfo.content}
                 fullWidth
                 label="Content"
@@ -342,7 +380,7 @@ const CreateNotePage = () => {
             open={drawerState}
             onClose={toggleDrawer(drawerState, false)}
           >
-          <div className="close-create-note-drawer-wrapper">
+          <div className={displayTheme? "close-create-note-drawer-wrapper-black" : "close-create-note-drawer-wrapper"}>
             <IconButton
               aria-label="delete"
               size="small"
@@ -353,15 +391,15 @@ const CreateNotePage = () => {
           </div>
             
             <div>
-                <div className="create-note-markdown-textfield">
-                <TextField fullWidth
+                <div className={displayTheme ? "create-note-markdown-textfield-black" : "create-note-markdown-textfield"}>
+                <TextField className={classes.root} fullWidth
                 value={noteInfo.content}
                 multiline
                 id="fullWidth"
                 onChange={onContentChange}
                 onPaste={uploadNotePicture}/>
                 </div>
-                <div className="create-note-markdown-display">
+                <div className={displayTheme ? "create-note-markdown-display-black" : "create-note-markdown-display"}>
                 <MarkdownWikiMD id="markdown-display">{noteInfo.content}</MarkdownWikiMD>
               </div>
           </div>

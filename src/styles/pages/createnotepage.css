@@ -1,3 +1,8 @@
+.create-note-page-wrapper-white {
+    background-color: white;
+    height: 100vh;
+}
+
 .create-note-page {
     margin: 5% 10%;
 }
@@ -56,7 +61,6 @@
     width: 100% !important;
 }
 
-
 @media (max-width:1080px){
     .create-note-markdown-textfield {
         width: 100%;
@@ -82,3 +86,127 @@
         height: calc(50vh);
     }
 }
+
+/* black theme */
+
+.create-note-page-wrapper-black {
+    height: 100vh;
+    background-color: #222831;
+    color: white;
+}
+
+.create-note-page-wrapper-black .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    color: white;
+}
+
+.create-note-page-wrapper-black .css-iqd1hh-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon {
+    color: rgb(255 255 255 / 26%)
+}
+
+.create-note-page-wrapper-black .css-i4bv87-MuiSvgIcon-root {
+    color: rgb(255 255 255 / 80%)
+}
+
+.css-9e5uuu-MuiPaper-root-MuiAutocomplete-paper {
+    color: white !important;
+    background-color: #2b323d !important;
+}
+
+.create-note-page-wrapper-black .css-viou3o-MuiAutocomplete-root .MuiOutlinedInput-root .MuiAutocomplete-input {
+    color: white;
+}
+
+.create-note-page-wrapper-black .css-viou3o-MuiAutocomplete-root .MuiAutocomplete-tag {
+    color: white;
+}
+
+/*
+.create-note-page-wrapper-black .MuiAutocomplete-hasPopupIcon.css-viou3o-MuiAutocomplete-root .MuiOutlinedInput-root,
+ .MuiAutocomplete-hasClearIcon.css-viou3o-MuiAutocomplete-root .MuiOutlinedInput-root
+{
+    color: white;
+}*/
+
+.create-note-page-wrapper-black .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+    color: rgb(255 255 255 / 80%);
+}
+
+.create-note-page-wrapper-black .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.create-note-page-wrapper-black .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input {
+    color: rgb(255 255 255 / 80%) ;
+}
+
+.create-note-page-wrapper-black .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+    color: rgb(255 255 255 / 80%) ;
+}
+
+.create-note-page-wrapper-black .css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root:hover {
+    border-color: rgb(231, 36, 36);
+    color: rgb(228, 23, 23);
+}
+
+.create-note-page-wrapper-black .css-1d3z3hw-MuiOutlinedInput-notchedOutline:hover {
+    outline: none !important;
+    border:1px solid red;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+.create-note-page-wrapper-black .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+    color: rgb(48 227 202 / 70%);
+}
+
+.close-create-note-drawer-wrapper-black {
+    background-color: #222831;
+    width: 100%;
+    text-align: right;
+    padding: 10px;
+}
+
+.create-note-markdown-display-black {
+    background-color: #222831;
+    width: 50%;
+    height: calc(100vh - 48px);
+    float: right;
+    padding: 0 2%;
+    overflow-y: auto;
+}
+
+.create-note-markdown-textfield-black {
+    background-color: #222831;
+    width: 50% !important;
+    float: left;
+}
+
+.create-note-markdown-textfield-black .css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root {
+    height: calc(100vh - 48px) !important;
+}
+
+.create-note-markdown-textfield-black .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input {
+    height: calc(98vh - 48px) !important;
+    overflow-y: auto !important;
+    color: rgb(255 255 255 / 80%);
+}
+
+.create-note-markdown-textfield-black .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.create-note-markdown-display-black {
+    color: white;
+}
+
+.create-note-markdown-display-black p {
+    color: white  !important;;
+}
+
+.close-create-note-drawer-wrapper-black .css-1vooibu-MuiSvgIcon-root {
+    color: white
+}
+
+.create-note-markdown-display-black .markdown-container .markdown-table tr:nth-of-type(even) {
+    background-color: #3a404bcc !important;
+}
+

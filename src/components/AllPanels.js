@@ -4,11 +4,13 @@ import "../styles/components/allpanels.css";
 import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
 import axios from "axios";
+import useTheme from "../hooks/useTheme";
 
 function AllPanels() {
     const [notes, setNotes] = useState([]);
     const [page, setCounter] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
+    const { displayTheme, setDisplayTheme } = useTheme();
 
     useEffect(() => {
         if(searchTerm == '') {
@@ -33,7 +35,7 @@ function AllPanels() {
                     setCounter(0);
                 })
                 .catch((err) => console.error(err));
-          }, 2000)
+          }, 800)
             return () => clearTimeout(delayDebounceFn)
         }
     }, [searchTerm]);
@@ -49,7 +51,7 @@ function AllPanels() {
     };
 
     return (
-        <div className="all-files">
+        <div className={displayTheme ? "all-files-black" : "all-files"}>
             <div>
                 <div className="all-files-title-wrapper">
                     <div>

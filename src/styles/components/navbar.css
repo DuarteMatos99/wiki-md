@@ -5,7 +5,17 @@
     letter-spacing: 3px;
 }
 
-nav {
+.nav-white {
+    display: flex;
+    justify-content: space-between;
+    min-height: 8vh;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.nav-black {
+    background-color: #222831;
+    color: white;
     display: flex;
     justify-content: space-between;
     min-height: 8vh;
